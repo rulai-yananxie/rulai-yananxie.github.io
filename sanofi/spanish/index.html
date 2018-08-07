@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Sanofi</title>
     <meta charset=utf-8>
     <meta name=viewport content="width=device-width,initial-scale=1">
     <style>
@@ -25,15 +26,25 @@
       max-width: 100%;
     }
     </style>
-    <script>window._rulai={"bot":"31f6b1891aff4129ab16d400835c51ca", "host": "console"}</script>
-    <script async src="https://console.rul.ai/w.js"></script>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+        <script src="../assets/chatwidget.js"></script>
+    <script>
+      $(function() {
+        setTimeout(function(){
+          loadChatWidget('1dc94c688a7d4685960562b530fa20f0'/* orgId */, '31f6b1891aff4129ab16d400835c51ca'/* botId */, {})
+        }, 1000)
+      })
+    </script>
   </head>
   <body>
     <div class="header">
-      <img src="./assets/logo-sanofi.png" />
+      <img src="../assets/logo-sanofi.png" />
     </div>
     <div class="intro">
-      <img src="./assets/intro.png" />
+      <img src="../assets/intro.png" />
     </div>
   </body>
 </html>
