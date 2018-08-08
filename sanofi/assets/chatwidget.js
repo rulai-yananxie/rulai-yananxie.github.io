@@ -72,7 +72,7 @@ function showChatWindow () {
     sessionStorage.removeItem('_rulai_widget_session_id')
     window._rulai_widget.showIframe()
   } else {
-    setTimeout(() => {
+    setTimeout(function() {
       showChatWindow()
     }, 300)
   }
