@@ -42,9 +42,10 @@
         <script src="../assets/chatwidget.js"></script>
     <script>
       $(function() {
+        loadChatWidgetWithoutShowingIt('1dc94c688a7d4685960562b530fa20f0'/* orgId */, '38ffc9cfb7e84ba2b3976ddcd03dd85d'/* botId */, {})
         setTimeout(function(){
-          loadChatWidget('1dc94c688a7d4685960562b530fa20f0'/* orgId */, '38ffc9cfb7e84ba2b3976ddcd03dd85d'/* botId */, {})
-        }, 2000)
+          showChatWindow()
+        }, 1000)
       })
     </script>
   </head>

@@ -39,12 +39,13 @@
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
-        <script src="../assets/chatwidget.js"></script>
+    <script src="../assets/chatwidget.js"></script>
     <script>
       $(function() {
+        loadChatWidgetWithoutShowingIt('1dc94c688a7d4685960562b530fa20f0'/* orgId */, '31f6b1891aff4129ab16d400835c51ca'/* botId */, {})
         setTimeout(function(){
-          loadChatWidget('1dc94c688a7d4685960562b530fa20f0'/* orgId */, '31f6b1891aff4129ab16d400835c51ca'/* botId */, {})
-        }, 2000)
+          showChatWindow()
+        }, 1000)
       })
     </script>
   </head>

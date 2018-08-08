@@ -78,7 +78,7 @@ function showChatWindow () {
   }
 }
 
-function loadChatWidget (botId, orgId, variables) {
+function loadChatWidgetWithoutShowingIt (botId, orgId, variables) {
   var variableList = []
   for (var name in variables) {
     if (typeof variables[name] === 'object') {
@@ -96,5 +96,9 @@ function loadChatWidget (botId, orgId, variables) {
       console: false,
       slot: {
         variables: variableList}})
+}
+
+function loadChatWidget (botId, orgId, variables) {
+  loadChatWidgetWithoutShowingIt(botId, orgId, variables)
   showChatWindow()
 }
