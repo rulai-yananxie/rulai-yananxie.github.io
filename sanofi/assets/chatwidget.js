@@ -1,18 +1,16 @@
 function getChatWidgetCode (webRoot, orgId, botId, options, customScript) {
-  if (!options) {
-    options = 'null'
-  } else {
-    options = JSON.stringify(options)
-  }
-  if (!customScript || customScript === undefined) {
-    customScript = 'w'
+  var config = {
+    bot: botId,
+    options: options
   }
 
-  var script = '<script src="' + webRoot + customScript + '.js"></script>' +
-    '<script type="text/javascript">_widget("' + webRoot + '", "' + orgId + '", "' + botId +
-    '", "0px", "0px", "32454c", "289dd2", ' + options + ')</script>'
-  console.log('add_web_widget ' + script)
-  return script
+  var newScript = '<script>window._rulai=' + JSON.stringify(config) + '</script><script src="https://console.rul.ai/w.js"></script>';
+
+  // var script = '<script src="' + webRoot + customScript + '.js"></script>' +
+  //   '<script type="text/javascript">_widget("' + webRoot + '", "' + orgId + '", "' + botId +
+  //   '", "0px", "0px", "32454c", "289dd2", ' + options + ')</script>'
+  console.log('add_web_widget ' + newScript)
+  return newScript
 }
 
 function addChatWidget (webRoot, orgId, botId, options, customScript) {
@@ -94,6 +92,7 @@ function loadChatWidgetWithoutShowingIt (botId, orgId, variables) {
     {
       isOngoingSession: false,
       console: false,
+      ui:{"mainThemeColor":"#DFA6AE","headerLogo":"sanofi-header","footerLogo":"sanofi-footer","hideAttachment":true,"greetingTimer":"1"},
       slot: {
         variables: variableList}})
 }
