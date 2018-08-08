@@ -85,6 +85,7 @@ function loadChatWidgetWithoutShowingIt (botId, orgId, variables) {
       variableList.push({name: name, value: variables[name]})
     }
   }
+  var ui = {"mainThemeColor":"#DFA6AE","headerLogo":"sanofi-header","footerLogo":"sanofi-footer","hideAttachment":true,"greetingTimer":"2"}
   addChatWidget(
     'https://console.rul.ai/',
     botId,
@@ -92,9 +93,14 @@ function loadChatWidgetWithoutShowingIt (botId, orgId, variables) {
     {
       isOngoingSession: false,
       console: false,
-      ui:{"mainThemeColor":"#DFA6AE","headerLogo":"sanofi-header","footerLogo":"sanofi-footer","hideAttachment":true,"greetingTimer":"1"},
+      ui: ui,
       slot: {
         variables: variableList}})
+  setInterval(function () {
+    if (window._rulai_widget) {
+      window._rulai_widget.setUi(ui)
+    }
+  }, 500)
 }
 
 function loadChatWidget (botId, orgId, variables) {
