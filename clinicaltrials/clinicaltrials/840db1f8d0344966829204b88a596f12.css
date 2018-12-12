@@ -1,0 +1,127 @@
+/* -------------------
+BEGIN whyCT 
+Sitecore Resource: bd87312c-90a0-4852-839e-c017434fa98c
+   -------------------*/
+.score-container.hero {
+  background-image: url("/-/media/EMS/Conditions/Generics/Brands/ClinicalTrials/why_hero jpg");
+}
+.score-container.bottom {
+  background-image: url("/-/media/EMS/Conditions/Generics/Brands/ClinicalTrials/why_bg2 jpg");
+}
+@media (max-width: 767px) {
+  
+}
+.score-column3-equal .image-component img {
+  margin: 0 auto 22px;
+  display: block;
+}
+@media (max-width: 767px) {
+  .score-column3-equal .image-component img {
+    padding: 0 15px;
+    width: auto;
+  }
+}
+.patricia-quote {
+  margin: 1em 0 2em;
+}
+@media (min-width: 768px) {
+  .patricia-quote {
+    margin: 60px 0 120px;
+  }
+}
+.patricia-quote .box-content {
+  background-color: #ee6b26;
+}
+@media (min-width: 768px) {
+  .patricia-quote .box-content {
+    padding-right: calc(50% + 40px);
+  }
+}
+.patricia-quote .box-content:after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 50%;
+  bottom: 0;
+  background: url("/-/media/EMS/Conditions/Generics/Brands/ClinicalTrials/photo_quote jpg") white 50% 50%;
+}
+@media (min-width: 768px) {
+  .patricia-quote .box-content:after {
+    content: '';
+  }
+}
+.patricia-quote .box-content:before {
+  display: block;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  position: absolute;
+  top: 37px;
+  left: 50%;
+  border-left-color: #ee6b26;
+  border-width: 20px;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  z-index: 1;
+}
+@media (min-width: 768px) {
+  .patricia-quote .box-content:before {
+    content: '';
+  }
+}
+.gray-list-box {
+  max-width: 758px;
+  margin: 1em auto 0;
+  border: 2px solid #ebebeb;
+  font-weight: 400;
+}
+@media (min-width: 768px) {
+  .gray-list-box {
+    margin: 3em auto 0;
+  }
+}
+.gray-list-box p {
+  color: white;
+  background-color: #818285;
+  margin: -2px -2px 0;
+  padding: 20px;
+  text-align: center;
+}
+.gray-list-box ul {
+  padding: 0 10px 0 30px;
+}
+@media (min-width: 768px) {
+  .gray-list-box ul {
+    position: relative;
+    margin: 50px 0;
+    width: 50%;
+    float: left;
+    padding-left: 70px;
+    padding-right: 50px;
+    border-left: 1px solid #adaeb0;
+  }
+}
+.gray-list-box ul:first-child {
+  border-left: 0;
+}
+.gray-list-box ul:after {
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+  top: -50px;
+  border-width: 20px 20px 0;
+  border-color: transparent;
+  border-style: solid;
+  border-top-color: #818285;
+  margin-left: -20px;
+}
+@media (min-width: 768px) {
+  .gray-list-box ul:after {
+    content: '';
+  }
+}
+.gray-list-box ul li {
+  margin: 0 0 1em;
+}

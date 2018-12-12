@@ -1,0 +1,1889 @@
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: f39bb88b-5a40-4100-9ef8-2cfd299cd4da
+   -------------------*/
+(function ($) {
+    window.cookiePolicy = (function () {
+        ! function (e, t) {
+            var n = function () {
+                return n.get.apply(n, arguments)
+            };
+            n.utils = utils = {
+                isArray: Array.isArray || function (e) {
+                    return Object.prototype.toString.call(e) === "[object Array]"
+                },
+                isPlainObject: function (e) {
+                    return !!e && Object.prototype.toString.call(e) === "[object Object]"
+                },
+                toArray: function (e) {
+                    return Array.prototype.slice.call(e)
+                },
+                getKeys: Object.keys || function (e) {
+                    var t = [],
+						n = "";
+                    for (n in e) e.hasOwnProperty(n) && t.push(n);
+                    return t
+                },
+                escape: function (e) {
+                    return String(e).replace(/[,;"\\=\s%]/g, function (e) {
+                        return encodeURIComponent(e)
+                    })
+                },
+                retrieve: function (e, t) {
+                    return e == null ? t : e
+                }
+            }, n.defaults = {}, n.expiresMultiplier = 86400, n.set = function (n, r, i) {
+                if (utils.isPlainObject(n))
+                    for (var s in n) n.hasOwnProperty(s) && this.set(s, n[s], r);
+                else {
+                    i = utils.isPlainObject(i) ? i : {
+                        expires: i
+                    };
+                    var o = i.expires !== t ? i.expires : this.defaults.expires || "",
+						u = typeof o;
+                    u === "string" && o !== "" ? o = new Date(o) : u === "number" && (o = new Date(+(new Date) + 1e3 * this.expiresMultiplier * o)), o !== "" && "toGMTString" in o && (o = ";expires=" + o.toGMTString());
+
+                    //var a = i.path || this.defaults.path;
+                    //a = a ? ";path=" + a : "";
+
+
+                    var a = this.defaults.path;
+                    a = ";path=/";
+
+                    var f = i.domain || this.defaults.domain;
+                    f = f ? ";domain=" + f : "";
+                    var l = i.secure || this.defaults.secure ? ";secure" : "";
+                    e.cookie = utils.escape(n) + "=" + utils.escape(r) + o + a + f + l
+                }
+                return this
+            }, n.remove = function (e) {
+                e = utils.isArray(e) ? e : utils.toArray(arguments);
+                for (var t = 0, n = e.length; t < n; t++) this.set(e[t], "", -1);
+                return this
+            }, n.empty = function () {
+                return this.remove(utils.getKeys(this.all()))
+            }, n.get = function (e, n) {
+                n = n || t;
+                var r = this.all();
+                if (utils.isArray(e)) {
+                    var i = {};
+                    for (var s = 0, o = e.length; s < o; s++) {
+                        var u = e[s];
+                        i[u] = utils.retrieve(r[u], n)
+                    }
+                    return i
+                }
+                return utils.retrieve(r[e], n)
+            }, n.all = function () {
+                if (e.cookie === "") return {};
+                var t = e.cookie.split("; "),
+					n = {};
+                for (var r = 0, i = t.length; r < i; r++) {
+                    var s = t[r].split("=");
+                    n[decodeURIComponent(s[0])] = decodeURIComponent(s[1])
+                }
+                return n
+            }, n.enabled = function () {
+                if (navigator.cookieEnabled) return !0;
+                var e = n.set("_", "_").get("_") === "_";
+                return n.remove("_"), e
+            }, typeof define == "function" && define.amd ? define(function () {
+                return n
+            }) : typeof exports != "undefined" ? exports.cookie = n : window.cookie = n
+        }(document);
+
+        function init() {
+            check();
+
+            $('.cookie-alert .cookie-close').on('click', function (e) {
+                e.preventDefault();
+
+                closeCookieAlert();
+            });
+        }
+
+        /* on ready check if cookie to show info not exist */
+        function check() {
+            if (cookie.get('cookie-alert') !== 'true') {
+                cookieAlert()
+            }
+        }
+
+        /* Show cookie bar with info about policy */
+        function cookieAlert() {
+            setTimeout(function () {
+                $('.cookie-alert').addClass('show');
+            }, 1000);
+        }
+
+        /* function called after click on button close */
+        function closeCookieAlert() {
+            $('.cookie-alert').removeClass('show');
+            cookie.set('cookie-alert', 'true')
+        }
+
+        return {
+            init: init,
+            close: closeCookieAlert
+        }
+    })();
+    $(document).ready(function () {
+
+        cookiePolicy.init();
+    });
+
+})(jQuery);
+
+
+
+
+
+
+//Hide and Show Cookie based on the cookie name
+if ((cookie.get("WhiteLBLCookie"))) { $("#divCookiclose").remove();  }
+else {
+    
+    $("#divCookiclose").removeClass("hide-cookie");
+    $("#btnCookieClose").click(function () {
+
+        cookie.set("WhiteLBLCookie", "true", 180); $("#divCookiclose").remove();
+
+
+    });
+}
+//
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: 84b5a285-ad69-4184-bc35-728bb4aca564
+   -------------------*/
+$(document).ready(function () {
+
+    $(".sub-child-list").each(function () {
+
+        if ($(this).children().length < 1)
+            {
+            $(this).closest("li.hasChildren").removeClass("hasChildren");
+        }
+    })
+
+    $(".child-list").each(function () {
+        if ($(this).children().length < 1) {
+            $(this).closest("li.hasChildren").removeClass("hasChildren");
+        }
+    })
+
+
+    $(".lastItemParent").each(function () {
+
+        if ($(this).next("ul.sub-child-list").children().length < 1) {
+
+            var getText = $(this).find("span.lastItem").text();
+
+            $(this).find("span.lastItem").parent().remove();
+            $(this).html(getText);
+
+        }
+        
+    });
+   
+
+    });
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: d7bc4877-5302-43bf-b5fb-4aa6eae503ab
+   -------------------*/
+/*! jQuery Validation Plugin - v1.11.0 - 2/4/2013
+* https://github.com/jzaefferer/jquery-validation
+* Copyright (c) 2013 JÃ¶rn Zaefferer; Licensed MIT */
+(function (e) { e.extend(e.fn, { validate: function (t) { if (!this.length) { t && t.debug && window.console && console.warn("Nothing selected, can't validate, returning nothing."); return } var n = e.data(this[0], "validator"); return n ? n : (this.attr("novalidate", "novalidate"), n = new e.validator(t, this[0]), e.data(this[0], "validator", n), n.settings.onsubmit && (this.validateDelegate(":submit", "click", function (t) { n.settings.submitHandler && (n.submitButton = t.target), e(t.target).hasClass("cancel") && (n.cancelSubmit = !0) }), this.submit(function (t) { function r() { var r; return n.settings.submitHandler ? (n.submitButton && (r = e("<input type='hidden'/>").attr("name", n.submitButton.name).val(n.submitButton.value).appendTo(n.currentForm)), n.settings.submitHandler.call(n, n.currentForm, t), n.submitButton && r.remove(), !1) : !0 } return n.settings.debug && t.preventDefault(), n.cancelSubmit ? (n.cancelSubmit = !1, r()) : n.form() ? n.pendingRequest ? (n.formSubmitted = !0, !1) : r() : (n.focusInvalid(), !1) })), n) }, valid: function () { if (e(this[0]).is("form")) return this.validate().form(); var t = !0, n = e(this[0].form).validate(); return this.each(function () { t &= n.element(this) }), t }, removeAttrs: function (t) { var n = {}, r = this; return e.each(t.split(/\s/), function (e, t) { n[t] = r.attr(t), r.removeAttr(t) }), n }, rules: function (t, n) { var r = this[0]; if (t) { var i = e.data(r.form, "validator").settings, s = i.rules, o = e.validator.staticRules(r); switch (t) { case "add": e.extend(o, e.validator.normalizeRule(n)), s[r.name] = o, n.messages && (i.messages[r.name] = e.extend(i.messages[r.name], n.messages)); break; case "remove": if (!n) return delete s[r.name], o; var u = {}; return e.each(n.split(/\s/), function (e, t) { u[t] = o[t], delete o[t] }), u } } var a = e.validator.normalizeRules(e.extend({}, e.validator.classRules(r), e.validator.attributeRules(r), e.validator.dataRules(r), e.validator.staticRules(r)), r); if (a.required) { var f = a.required; delete a.required, a = e.extend({ required: f }, a) } return a } }), e.extend(e.expr[":"], { blank: function (t) { return !e.trim("" + t.value) }, filled: function (t) { return !!e.trim("" + t.value) }, unchecked: function (e) { return !e.checked } }), e.validator = function (t, n) { this.settings = e.extend(!0, {}, e.validator.defaults, t), this.currentForm = n, this.init() }, e.validator.format = function (t, n) { return arguments.length === 1 ? function () { var n = e.makeArray(arguments); return n.unshift(t), e.validator.format.apply(this, n) } : (arguments.length > 2 && n.constructor !== Array && (n = e.makeArray(arguments).slice(1)), n.constructor !== Array && (n = [n]), e.each(n, function (e, n) { t = t.replace(new RegExp("\\{" + e + "\\}", "g"), function () { return n }) }), t) }, e.extend(e.validator, { defaults: { messages: {}, groups: {}, rules: {}, errorClass: "error", validClass: "valid", errorElement: "label", focusInvalid: !0, errorContainer: e([]), errorLabelContainer: e([]), onsubmit: !0, ignore: ":hidden", ignoreTitle: !1, onfocusin: function (e, t) { this.lastActive = e, this.settings.focusCleanup && !this.blockFocusCleanup && (this.settings.unhighlight && this.settings.unhighlight.call(this, e, this.settings.errorClass, this.settings.validClass), this.addWrapper(this.errorsFor(e)).hide()) }, onfocusout: function (e, t) { !this.checkable(e) && (e.name in this.submitted || !this.optional(e)) && this.element(e) }, onkeyup: function (e, t) { if (t.which === 9 && this.elementValue(e) === "") return; (e.name in this.submitted || e === this.lastElement) && this.element(e) }, onclick: function (e, t) { e.name in this.submitted ? this.element(e) : e.parentNode.name in this.submitted && this.element(e.parentNode) }, highlight: function (t, n, r) { t.type === "radio" ? this.findByName(t.name).addClass(n).removeClass(r) : e(t).addClass(n).removeClass(r) }, unhighlight: function (t, n, r) { t.type === "radio" ? this.findByName(t.name).removeClass(n).addClass(r) : e(t).removeClass(n).addClass(r) } }, setDefaults: function (t) { e.extend(e.validator.defaults, t) }, messages: { required: "This field is required.", remote: "Please fix this field.", email: "Please enter a valid email address.", url: "Please enter a valid URL.", date: "Please enter a valid date.", dateISO: "Please enter a valid date (ISO).", number: "Please enter a valid number.", digits: "Please enter only digits.", creditcard: "Please enter a valid credit card number.", equalTo: "Please enter the same value again.", maxlength: e.validator.format("Please enter no more than {0} characters."), minlength: e.validator.format("Please enter at least {0} characters."), rangelength: e.validator.format("Please enter a value between {0} and {1} characters long."), range: e.validator.format("Please enter a value between {0} and {1}."), max: e.validator.format("Please enter a value less than or equal to {0}."), min: e.validator.format("Please enter a value greater than or equal to {0}.") }, autoCreateRanges: !1, prototype: { init: function () { function r(t) { var n = e.data(this[0].form, "validator"), r = "on" + t.type.replace(/^validate/, ""); n.settings[r] && n.settings[r].call(n, this[0], t) } this.labelContainer = e(this.settings.errorLabelContainer), this.errorContext = this.labelContainer.length && this.labelContainer || e(this.currentForm), this.containers = e(this.settings.errorContainer).add(this.settings.errorLabelContainer), this.submitted = {}, this.valueCache = {}, this.pendingRequest = 0, this.pending = {}, this.invalid = {}, this.reset(); var t = this.groups = {}; e.each(this.settings.groups, function (n, r) { typeof r == "string" && (r = r.split(/\s/)), e.each(r, function (e, r) { t[r] = n }) }); var n = this.settings.rules; e.each(n, function (t, r) { n[t] = e.validator.normalizeRule(r) }), e(this.currentForm).validateDelegate(":text, [type='password'], [type='file'], select, textarea, [type='number'], [type='search'] ,[type='tel'], [type='url'], [type='email'], [type='datetime'], [type='date'], [type='month'], [type='week'], [type='time'], [type='datetime-local'], [type='range'], [type='color'] ", "focusin focusout keyup", r).validateDelegate("[type='radio'], [type='checkbox'], select, option", "click", r), this.settings.invalidHandler && e(this.currentForm).bind("invalid-form.validate", this.settings.invalidHandler) }, form: function () { return this.checkForm(), e.extend(this.submitted, this.errorMap), this.invalid = e.extend({}, this.errorMap), this.valid() || e(this.currentForm).triggerHandler("invalid-form", [this]), this.showErrors(), this.valid() }, checkForm: function () { this.prepareForm(); for (var e = 0, t = this.currentElements = this.elements() ; t[e]; e++) this.check(t[e]); return this.valid() }, element: function (t) { t = this.validationTargetFor(this.clean(t)), this.lastElement = t, this.prepareElement(t), this.currentElements = e(t); var n = this.check(t) !== !1; return n ? delete this.invalid[t.name] : this.invalid[t.name] = !0, this.numberOfInvalids() || (this.toHide = this.toHide.add(this.containers)), this.showErrors(), n }, showErrors: function (t) { if (t) { e.extend(this.errorMap, t), this.errorList = []; for (var n in t) this.errorList.push({ message: t[n], element: this.findByName(n)[0] }); this.successList = e.grep(this.successList, function (e) { return !(e.name in t) }) } this.settings.showErrors ? this.settings.showErrors.call(this, this.errorMap, this.errorList) : this.defaultShowErrors() }, resetForm: function () { e.fn.resetForm && e(this.currentForm).resetForm(), this.submitted = {}, this.lastElement = null, this.prepareForm(), this.hideErrors(), this.elements().removeClass(this.settings.errorClass).removeData("previousValue") }, numberOfInvalids: function () { return this.objectLength(this.invalid) }, objectLength: function (e) { var t = 0; for (var n in e) t++; return t }, hideErrors: function () { this.addWrapper(this.toHide).hide() }, valid: function () { return this.size() === 0 }, size: function () { return this.errorList.length }, focusInvalid: function () { if (this.settings.focusInvalid) try { e(this.findLastActive() || this.errorList.length && this.errorList[0].element || []).filter(":visible").focus().trigger("focusin") } catch (t) { } }, findLastActive: function () { var t = this.lastActive; return t && e.grep(this.errorList, function (e) { return e.element.name === t.name }).length === 1 && t }, elements: function () { var t = this, n = {}; return e(this.currentForm).find("input, select, textarea").not(":submit, :reset, :image, [disabled]").not(this.settings.ignore).filter(function () { return !this.name && t.settings.debug && window.console && console.error("%o has no name assigned", this), this.name in n || !t.objectLength(e(this).rules()) ? !1 : (n[this.name] = !0, !0) }) }, clean: function (t) { return e(t)[0] }, errors: function () { var t = this.settings.errorClass.replace(" ", "."); return e(this.settings.errorElement + "." + t, this.errorContext) }, reset: function () { this.successList = [], this.errorList = [], this.errorMap = {}, this.toShow = e([]), this.toHide = e([]), this.currentElements = e([]) }, prepareForm: function () { this.reset(), this.toHide = this.errors().add(this.containers) }, prepareElement: function (e) { this.reset(), this.toHide = this.errorsFor(e) }, elementValue: function (t) { var n = e(t).attr("type"), r = e(t).val(); return n === "radio" || n === "checkbox" ? e("input[name='" + e(t).attr("name") + "']:checked").val() : typeof r == "string" ? r.replace(/\r/g, "") : r }, check: function (t) { t = this.validationTargetFor(this.clean(t)); var n = e(t).rules(), r = !1, i = this.elementValue(t), s; for (var o in n) { var u = { method: o, parameters: n[o] }; try { s = e.validator.methods[o].call(this, i, t, u.parameters); if (s === "dependency-mismatch") { r = !0; continue } r = !1; if (s === "pending") { this.toHide = this.toHide.not(this.errorsFor(t)); return } if (!s) return this.formatAndAdd(t, u), !1 } catch (a) { throw this.settings.debug && window.console && console.log("Exception occured when checking element " + t.id + ", check the '" + u.method + "' method.", a), a } } if (r) return; return this.objectLength(n) && this.successList.push(t), !0 }, customDataMessage: function (t, n) { return e(t).data("msg-" + n.toLowerCase()) || t.attributes && e(t).attr("data-msg-" + n.toLowerCase()) }, customMessage: function (e, t) { var n = this.settings.messages[e]; return n && (n.constructor === String ? n : n[t]) }, findDefined: function () { for (var e = 0; e < arguments.length; e++) if (arguments[e] !== undefined) return arguments[e]; return undefined }, defaultMessage: function (t, n) { return this.findDefined(this.customMessage(t.name, n), this.customDataMessage(t, n), !this.settings.ignoreTitle && t.title || undefined, e.validator.messages[n], "<strong>Warning: No message defined for " + t.name + "</strong>") }, formatAndAdd: function (t, n) { var r = this.defaultMessage(t, n.method), i = /\$?\{(\d+)\}/g; typeof r == "function" ? r = r.call(this, n.parameters, t) : i.test(r) && (r = e.validator.format(r.replace(i, "{$1}"), n.parameters)), this.errorList.push({ message: r, element: t }), this.errorMap[t.name] = r, this.submitted[t.name] = r }, addWrapper: function (e) { return this.settings.wrapper && (e = e.add(e.parent(this.settings.wrapper))), e }, defaultShowErrors: function () { var e, t; for (e = 0; this.errorList[e]; e++) { var n = this.errorList[e]; this.settings.highlight && this.settings.highlight.call(this, n.element, this.settings.errorClass, this.settings.validClass), this.showLabel(n.element, n.message) } this.errorList.length && (this.toShow = this.toShow.add(this.containers)); if (this.settings.success) for (e = 0; this.successList[e]; e++) this.showLabel(this.successList[e]); if (this.settings.unhighlight) for (e = 0, t = this.validElements() ; t[e]; e++) this.settings.unhighlight.call(this, t[e], this.settings.errorClass, this.settings.validClass); this.toHide = this.toHide.not(this.toShow), this.hideErrors(), this.addWrapper(this.toShow).show() }, validElements: function () { return this.currentElements.not(this.invalidElements()) }, invalidElements: function () { return e(this.errorList).map(function () { return this.element }) }, showLabel: function (t, n) { var r = this.errorsFor(t); r.length ? (r.removeClass(this.settings.validClass).addClass(this.settings.errorClass), r.html(n)) : (r = e("<" + this.settings.errorElement + ">").attr("for", this.idOrName(t)).addClass(this.settings.errorClass).html(n || ""), this.settings.wrapper && (r = r.hide().show().wrap("<" + this.settings.wrapper + "/>").parent()), this.labelContainer.append(r).length || (this.settings.errorPlacement ? this.settings.errorPlacement(r, e(t)) : r.insertAfter(t))), !n && this.settings.success && (r.text(""), typeof this.settings.success == "string" ? r.addClass(this.settings.success) : this.settings.success(r, t)), this.toShow = this.toShow.add(r) }, errorsFor: function (t) { var n = this.idOrName(t); return this.errors().filter(function () { return e(this).attr("for") === n }) }, idOrName: function (e) { return this.groups[e.name] || (this.checkable(e) ? e.name : e.id || e.name) }, validationTargetFor: function (e) { return this.checkable(e) && (e = this.findByName(e.name).not(this.settings.ignore)[0]), e }, checkable: function (e) { return /radio|checkbox/i.test(e.type) }, findByName: function (t) { return e(this.currentForm).find("[name='" + t + "']") }, getLength: function (t, n) { switch (n.nodeName.toLowerCase()) { case "select": return e("option:selected", n).length; case "input": if (this.checkable(n)) return this.findByName(n.name).filter(":checked").length } return t.length }, depend: function (e, t) { return this.dependTypes[typeof e] ? this.dependTypes[typeof e](e, t) : !0 }, dependTypes: { "boolean": function (e, t) { return e }, string: function (t, n) { return !!e(t, n.form).length }, "function": function (e, t) { return e(t) } }, optional: function (t) { var n = this.elementValue(t); return !e.validator.methods.required.call(this, n, t) && "dependency-mismatch" }, startRequest: function (e) { this.pending[e.name] || (this.pendingRequest++, this.pending[e.name] = !0) }, stopRequest: function (t, n) { this.pendingRequest--, this.pendingRequest < 0 && (this.pendingRequest = 0), delete this.pending[t.name], n && this.pendingRequest === 0 && this.formSubmitted && this.form() ? (e(this.currentForm).submit(), this.formSubmitted = !1) : !n && this.pendingRequest === 0 && this.formSubmitted && (e(this.currentForm).triggerHandler("invalid-form", [this]), this.formSubmitted = !1) }, previousValue: function (t) { return e.data(t, "previousValue") || e.data(t, "previousValue", { old: null, valid: !0, message: this.defaultMessage(t, "remote") }) } }, classRuleSettings: { required: { required: !0 }, email: { email: !0 }, url: { url: !0 }, date: { date: !0 }, dateISO: { dateISO: !0 }, number: { number: !0 }, digits: { digits: !0 }, creditcard: { creditcard: !0 } }, addClassRules: function (t, n) { t.constructor === String ? this.classRuleSettings[t] = n : e.extend(this.classRuleSettings, t) }, classRules: function (t) { var n = {}, r = e(t).attr("class"); return r && e.each(r.split(" "), function () { this in e.validator.classRuleSettings && e.extend(n, e.validator.classRuleSettings[this]) }), n }, attributeRules: function (t) { var n = {}, r = e(t); for (var i in e.validator.methods) { var s; i === "required" ? (s = r.get(0).getAttribute(i), s === "" && (s = !0), s = !!s) : s = r.attr(i), s ? n[i] = s : r[0].getAttribute("type") === i && (n[i] = !0) } return n.maxlength && /-1|2147483647|524288/.test(n.maxlength) && delete n.maxlength, n }, dataRules: function (t) { var n, r, i = {}, s = e(t); for (n in e.validator.methods) r = s.data("rule-" + n.toLowerCase()), r !== undefined && (i[n] = r); return i }, staticRules: function (t) { var n = {}, r = e.data(t.form, "validator"); return r.settings.rules && (n = e.validator.normalizeRule(r.settings.rules[t.name]) || {}), n }, normalizeRules: function (t, n) { return e.each(t, function (r, i) { if (i === !1) { delete t[r]; return } if (i.param || i.depends) { var s = !0; switch (typeof i.depends) { case "string": s = !!e(i.depends, n.form).length; break; case "function": s = i.depends.call(n, n) } s ? t[r] = i.param !== undefined ? i.param : !0 : delete t[r] } }), e.each(t, function (r, i) { t[r] = e.isFunction(i) ? i(n) : i }), e.each(["minlength", "maxlength"], function () { t[this] && (t[this] = Number(t[this])) }), e.each(["rangelength"], function () { var n; t[this] && (e.isArray(t[this]) ? t[this] = [Number(t[this][0]), Number(t[this][1])] : typeof t[this] == "string" && (n = t[this].split(/[\s,]+/), t[this] = [Number(n[0]), Number(n[1])])) }), e.validator.autoCreateRanges && (t.min && t.max && (t.range = [t.min, t.max], delete t.min, delete t.max), t.minlength && t.maxlength && (t.rangelength = [t.minlength, t.maxlength], delete t.minlength, delete t.maxlength)), t }, normalizeRule: function (t) { if (typeof t == "string") { var n = {}; e.each(t.split(/\s/), function () { n[this] = !0 }), t = n } return t }, addMethod: function (t, n, r) { e.validator.methods[t] = n, e.validator.messages[t] = r !== undefined ? r : e.validator.messages[t], n.length < 3 && e.validator.addClassRules(t, e.validator.normalizeRule(t)) }, methods: { required: function (t, n, r) { if (!this.depend(r, n)) return "dependency-mismatch"; if (n.nodeName.toLowerCase() === "select") { var i = e(n).val(); return i && i.length > 0 } return this.checkable(n) ? this.getLength(t, n) > 0 : e.trim(t).length > 0 }, remote: function (t, n, r) { if (this.optional(n)) return "dependency-mismatch"; var i = this.previousValue(n); this.settings.messages[n.name] || (this.settings.messages[n.name] = {}), i.originalMessage = this.settings.messages[n.name].remote, this.settings.messages[n.name].remote = i.message, r = typeof r == "string" && { url: r } || r; if (i.old === t) return i.valid; i.old = t; var s = this; this.startRequest(n); var o = {}; return o[n.name] = t, e.ajax(e.extend(!0, { url: r, mode: "abort", port: "validate" + n.name, dataType: "json", data: o, success: function (r) { s.settings.messages[n.name].remote = i.originalMessage; var o = r === !0 || r === "true"; if (o) { var u = s.formSubmitted; s.prepareElement(n), s.formSubmitted = u, s.successList.push(n), delete s.invalid[n.name], s.showErrors() } else { var a = {}, f = r || s.defaultMessage(n, "remote"); a[n.name] = i.message = e.isFunction(f) ? f(t) : f, s.invalid[n.name] = !0, s.showErrors(a) } i.valid = o, s.stopRequest(n, o) } }, r)), "pending" }, minlength: function (t, n, r) { var i = e.isArray(t) ? t.length : this.getLength(e.trim(t), n); return this.optional(n) || i >= r }, maxlength: function (t, n, r) { var i = e.isArray(t) ? t.length : this.getLength(e.trim(t), n); return this.optional(n) || i <= r }, rangelength: function (t, n, r) { var i = e.isArray(t) ? t.length : this.getLength(e.trim(t), n); return this.optional(n) || i >= r[0] && i <= r[1] }, min: function (e, t, n) { return this.optional(t) || e >= n }, max: function (e, t, n) { return this.optional(t) || e <= n }, range: function (e, t, n) { return this.optional(t) || e >= n[0] && e <= n[1] }, email: function (e, t) { return this.optional(t) || /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))$/i.test(e) }, url: function (e, t) { return this.optional(t) || /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(e) }, date: function (e, t) { return this.optional(t) || !/Invalid|NaN/.test((new Date(e)).toString()) }, dateISO: function (e, t) { return this.optional(t) || /^\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2}$/.test(e) }, number: function (e, t) { return this.optional(t) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(e) }, digits: function (e, t) { return this.optional(t) || /^\d+$/.test(e) }, creditcard: function (e, t) { if (this.optional(t)) return "dependency-mismatch"; if (/[^0-9 \-]+/.test(e)) return !1; var n = 0, r = 0, i = !1; e = e.replace(/\D/g, ""); for (var s = e.length - 1; s >= 0; s--) { var o = e.charAt(s); r = parseInt(o, 10), i && (r *= 2) > 9 && (r -= 9), n += r, i = !i } return n % 10 === 0 }, equalTo: function (t, n, r) { var i = e(r); return this.settings.onfocusout && i.unbind(".validate-equalTo").bind("blur.validate-equalTo", function () { e(n).valid() }), t === i.val() } } }), e.format = e.validator.format })(jQuery), function (e) { var t = {}; if (e.ajaxPrefilter) e.ajaxPrefilter(function (e, n, r) { var i = e.port; e.mode === "abort" && (t[i] && t[i].abort(), t[i] = r) }); else { var n = e.ajax; e.ajax = function (r) { var i = ("mode" in r ? r : e.ajaxSettings).mode, s = ("port" in r ? r : e.ajaxSettings).port; return i === "abort" ? (t[s] && t[s].abort(), t[s] = n.apply(this, arguments)) : n.apply(this, arguments) } } }(jQuery), function (e) { e.extend(e.fn, { validateDelegate: function (t, n, r) { return this.bind(n, function (n) { var i = e(n.target); if (i.is(t)) return r.apply(i, arguments) }) } }) }(jQuery);
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: 9185a12f-2d1e-493b-a94d-3a0a085b2002
+   -------------------*/
+/*!
+** Unobtrusive validation support library for jQuery and jQuery Validate
+** Copyright (C) Microsoft Corporation. All rights reserved.
+*/
+
+/*jslint white: true, browser: true, onevar: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, newcap: true, immed: true, strict: false */
+/*global document: false, jQuery: false */
+
+(function ($) {
+    var $jQval = $.validator,
+        adapters,
+        data_validation = "unobtrusiveValidation";
+
+    function setValidationValues(options, ruleName, value) {
+        options.rules[ruleName] = value;
+        if (options.message) {
+            options.messages[ruleName] = options.message;
+        }
+    }
+
+    function splitAndTrim(value) {
+        return value.replace(/^\s+|\s+$/g, "").split(/\s*,\s*/g);
+    }
+
+    function escapeAttributeValue(value) {
+        // As mentioned on http://api.jquery.com/category/selectors/
+        return value.replace(/([!"#$%&'()*+,./:;<=>?@\[\\\]^`{|}~])/g, "\\$1");
+    }
+
+    function getModelPrefix(fieldName) {
+        return fieldName.substr(0, fieldName.lastIndexOf(".") + 1);
+    }
+
+    function appendModelPrefix(value, prefix) {
+        if (value.indexOf("*.") === 0) {
+            value = value.replace("*.", prefix);
+        }
+        return value;
+    }
+
+    function onError(error, inputElement) {  // 'this' is the form element
+        var container = $(this).find("[data-valmsg-for='" + escapeAttributeValue(inputElement[0].name) + "']"),
+            replaceAttrValue = container.attr("data-valmsg-replace"),
+            replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) !== false : null;
+
+        container.removeClass("field-validation-valid").addClass("field-validation-error");
+        error.data("unobtrusiveContainer", container);
+
+        if (replace) {
+            container.empty();
+            error.removeClass("input-validation-error").appendTo(container);
+        }
+        else {
+            error.hide();
+        }
+    }
+
+    function onErrors(event, validator) {  // 'this' is the form element
+        var container = $(this).find("[data-valmsg-summary=true]"),
+            list = container.find("ul");
+
+        if (list && list.length && validator.errorList.length) {
+            list.empty();
+            container.addClass("validation-summary-errors").removeClass("validation-summary-valid");
+
+            $.each(validator.errorList, function () {
+                $("<li />").html(this.message).appendTo(list);
+            });
+        }
+    }
+
+    function onSuccess(error) {  // 'this' is the form element
+        var container = error.data("unobtrusiveContainer"),
+            replaceAttrValue = container.attr("data-valmsg-replace"),
+            replace = replaceAttrValue ? $.parseJSON(replaceAttrValue) : null;
+
+        if (container) {
+            container.addClass("field-validation-valid").removeClass("field-validation-error");
+            error.removeData("unobtrusiveContainer");
+
+            if (replace) {
+                container.empty();
+            }
+        }
+    }
+
+    function onReset(event) {  // 'this' is the form element
+        var $form = $(this);
+        $form.data("validator").resetForm();
+        $form.find(".validation-summary-errors")
+            .addClass("validation-summary-valid")
+            .removeClass("validation-summary-errors");
+        $form.find(".field-validation-error")
+            .addClass("field-validation-valid")
+            .removeClass("field-validation-error")
+            .removeData("unobtrusiveContainer")
+            .find(">*")  // If we were using valmsg-replace, get the underlying error
+                .removeData("unobtrusiveContainer");
+    }
+
+    function validationInfo(form) {
+        var $form = $(form),
+            result = $form.data(data_validation),
+            onResetProxy = $.proxy(onReset, form);
+
+        if (!result) {
+            result = {
+                options: {  // options structure passed to jQuery Validate's validate() method
+                    errorClass: "input-validation-error",
+                    errorElement: "span",
+                    errorPlacement: $.proxy(onError, form),
+                    invalidHandler: $.proxy(onErrors, form),
+                    messages: {},
+                    rules: {},
+                    success: $.proxy(onSuccess, form)
+                },
+                attachValidation: function () {
+                    $form
+                        .unbind("reset." + data_validation, onResetProxy)
+                        .bind("reset." + data_validation, onResetProxy)
+                        .validate(this.options);
+                },
+                validate: function () {  // a validation function that is called by unobtrusive Ajax
+                    $form.validate();
+                    return $form.valid();
+                }
+            };
+            $form.data(data_validation, result);
+        }
+
+        return result;
+    }
+
+    $jQval.unobtrusive = {
+        adapters: [],
+
+        parseElement: function (element, skipAttach) {
+            /// <summary>
+            /// Parses a single HTML element for unobtrusive validation attributes.
+            /// </summary>
+            /// <param name="element" domElement="true">The HTML element to be parsed.</param>
+            /// <param name="skipAttach" type="Boolean">[Optional] true to skip attaching the
+            /// validation to the form. If parsing just this single element, you should specify true.
+            /// If parsing several elements, you should specify false, and manually attach the validation
+            /// to the form when you are finished. The default is false.</param>
+            var $element = $(element),
+                form = $element.parents("form")[0],
+                valInfo, rules, messages;
+
+            if (!form) {  // Cannot do client-side validation without a form
+                return;
+            }
+
+            valInfo = validationInfo(form);
+            valInfo.options.rules[element.name] = rules = {};
+            valInfo.options.messages[element.name] = messages = {};
+
+            $.each(this.adapters, function () {
+                var prefix = "data-val-" + this.name,
+                    message = $element.attr(prefix),
+                    paramValues = {};
+
+                if (message !== undefined) {  // Compare against undefined, because an empty message is legal (and falsy)
+                    prefix += "-";
+
+                    $.each(this.params, function () {
+                        paramValues[this] = $element.attr(prefix + this);
+                    });
+
+                    this.adapt({
+                        element: element,
+                        form: form,
+                        message: message,
+                        params: paramValues,
+                        rules: rules,
+                        messages: messages
+                    });
+                }
+            });
+
+            $.extend(rules, { "__dummy__": true });
+
+            if (!skipAttach) {
+                valInfo.attachValidation();
+            }
+        },
+
+        parse: function (selector) {
+            /// <summary>
+            /// Parses all the HTML elements in the specified selector. It looks for input elements decorated
+            /// with the [data-val=true] attribute value and enables validation according to the data-val-*
+            /// attribute values.
+            /// </summary>
+            /// <param name="selector" type="String">Any valid jQuery selector.</param>
+            var $forms = $(selector)
+                .parents("form")
+                .andSelf()
+                .add($(selector).find("form"))
+                .filter("form");
+
+            $(selector).find(":input[data-val=true]").each(function () {
+                $jQval.unobtrusive.parseElement(this, true);
+            });
+
+            $forms.each(function () {
+                var info = validationInfo(this);
+                if (info) {
+                    info.attachValidation();
+                }
+            });
+        }
+    };
+
+    adapters = $jQval.unobtrusive.adapters;
+
+    adapters.add = function (adapterName, params, fn) {
+        /// <summary>Adds a new adapter to convert unobtrusive HTML into a jQuery Validate validation.</summary>
+        /// <param name="adapterName" type="String">The name of the adapter to be added. This matches the name used
+        /// in the data-val-nnnn HTML attribute (where nnnn is the adapter name).</param>
+        /// <param name="params" type="Array" optional="true">[Optional] An array of parameter names (strings) that will
+        /// be extracted from the data-val-nnnn-mmmm HTML attributes (where nnnn is the adapter name, and
+        /// mmmm is the parameter name).</param>
+        /// <param name="fn" type="Function">The function to call, which adapts the values from the HTML
+        /// attributes into jQuery Validate rules and/or messages.</param>
+        /// <returns type="jQuery.validator.unobtrusive.adapters" />
+        if (!fn) {  // Called with no params, just a function
+            fn = params;
+            params = [];
+        }
+        this.push({ name: adapterName, params: params, adapt: fn });
+        return this;
+    };
+
+    adapters.addBool = function (adapterName, ruleName) {
+        /// <summary>Adds a new adapter to convert unobtrusive HTML into a jQuery Validate validation, where
+        /// the jQuery Validate validation rule has no parameter values.</summary>
+        /// <param name="adapterName" type="String">The name of the adapter to be added. This matches the name used
+        /// in the data-val-nnnn HTML attribute (where nnnn is the adapter name).</param>
+        /// <param name="ruleName" type="String" optional="true">[Optional] The name of the jQuery Validate rule. If not provided, the value
+        /// of adapterName will be used instead.</param>
+        /// <returns type="jQuery.validator.unobtrusive.adapters" />
+        return this.add(adapterName, function (options) {
+            setValidationValues(options, ruleName || adapterName, true);
+        });
+    };
+
+    adapters.addMinMax = function (adapterName, minRuleName, maxRuleName, minMaxRuleName, minAttribute, maxAttribute) {
+        /// <summary>Adds a new adapter to convert unobtrusive HTML into a jQuery Validate validation, where
+        /// the jQuery Validate validation has three potential rules (one for min-only, one for max-only, and
+        /// one for min-and-max). The HTML parameters are expected to be named -min and -max.</summary>
+        /// <param name="adapterName" type="String">The name of the adapter to be added. This matches the name used
+        /// in the data-val-nnnn HTML attribute (where nnnn is the adapter name).</param>
+        /// <param name="minRuleName" type="String">The name of the jQuery Validate rule to be used when you only
+        /// have a minimum value.</param>
+        /// <param name="maxRuleName" type="String">The name of the jQuery Validate rule to be used when you only
+        /// have a maximum value.</param>
+        /// <param name="minMaxRuleName" type="String">The name of the jQuery Validate rule to be used when you
+        /// have both a minimum and maximum value.</param>
+        /// <param name="minAttribute" type="String" optional="true">[Optional] The name of the HTML attribute that
+        /// contains the minimum value. The default is "min".</param>
+        /// <param name="maxAttribute" type="String" optional="true">[Optional] The name of the HTML attribute that
+        /// contains the maximum value. The default is "max".</param>
+        /// <returns type="jQuery.validator.unobtrusive.adapters" />
+        return this.add(adapterName, [minAttribute || "min", maxAttribute || "max"], function (options) {
+            var min = options.params.min,
+                max = options.params.max;
+
+            if (min && max) {
+                setValidationValues(options, minMaxRuleName, [min, max]);
+            }
+            else if (min) {
+                setValidationValues(options, minRuleName, min);
+            }
+            else if (max) {
+                setValidationValues(options, maxRuleName, max);
+            }
+        });
+    };
+
+    adapters.addSingleVal = function (adapterName, attribute, ruleName) {
+        /// <summary>Adds a new adapter to convert unobtrusive HTML into a jQuery Validate validation, where
+        /// the jQuery Validate validation rule has a single value.</summary>
+        /// <param name="adapterName" type="String">The name of the adapter to be added. This matches the name used
+        /// in the data-val-nnnn HTML attribute(where nnnn is the adapter name).</param>
+        /// <param name="attribute" type="String">[Optional] The name of the HTML attribute that contains the value.
+        /// The default is "val".</param>
+        /// <param name="ruleName" type="String" optional="true">[Optional] The name of the jQuery Validate rule. If not provided, the value
+        /// of adapterName will be used instead.</param>
+        /// <returns type="jQuery.validator.unobtrusive.adapters" />
+        return this.add(adapterName, [attribute || "val"], function (options) {
+            setValidationValues(options, ruleName || adapterName, options.params[attribute]);
+        });
+    };
+
+    $jQval.addMethod("__dummy__", function (value, element, params) {
+        return true;
+    });
+
+    $jQval.addMethod("regex", function (value, element, params) {
+        var match;
+        if (this.optional(element)) {
+            return true;
+        }
+
+        match = new RegExp(params).exec(value);
+        return (match && (match.index === 0) && (match[0].length === value.length));
+    });
+
+    $jQval.addMethod("nonalphamin", function (value, element, nonalphamin) {
+        var match;
+        if (nonalphamin) {
+            match = value.match(/\W/g);
+            match = match && match.length >= nonalphamin;
+        }
+        return match;
+    });
+
+    adapters.addSingleVal("accept", "exts").addSingleVal("regex", "pattern");
+    adapters.addBool("creditcard").addBool("date").addBool("digits").addBool("email").addBool("number").addBool("url");
+    adapters.addMinMax("length", "minlength", "maxlength", "rangelength").addMinMax("range", "min", "max", "range");
+    adapters.add("equalto", ["other"], function (options) {
+        var prefix = getModelPrefix(options.element.name),
+            other = options.params.other,
+            fullOtherName = appendModelPrefix(other, prefix),
+            element = $(options.form).find(":input[name='" + escapeAttributeValue(fullOtherName) + "']")[0];
+
+        setValidationValues(options, "equalTo", element);
+    });
+    adapters.add("required", function (options) {
+        // jQuery Validate equates "required" with "mandatory" for checkbox elements
+        if (options.element.tagName.toUpperCase() !== "INPUT" || options.element.type.toUpperCase() !== "CHECKBOX") {
+            setValidationValues(options, "required", true);
+        }
+    });
+    adapters.add("remote", ["url", "type", "additionalfields"], function (options) {
+        var value = {
+            url: options.params.url,
+            type: options.params.type || "GET",
+            data: {}
+        },
+            prefix = getModelPrefix(options.element.name);
+
+        $.each(splitAndTrim(options.params.additionalfields || options.element.name), function (i, fieldName) {
+            var paramName = appendModelPrefix(fieldName, prefix);
+            value.data[paramName] = function () {
+                return $(options.form).find(":input[name='" + escapeAttributeValue(paramName) + "']").val();
+            };
+        });
+
+        setValidationValues(options, "remote", value);
+    });
+    adapters.add("password", ["min", "nonalphamin", "regex"], function (options) {
+        if (options.params.min) {
+            setValidationValues(options, "minlength", options.params.min);
+        }
+        if (options.params.nonalphamin) {
+            setValidationValues(options, "nonalphamin", options.params.nonalphamin);
+        }
+        if (options.params.regex) {
+            setValidationValues(options, "regex", options.params.regex);
+        }
+    });
+
+    $(function () {
+        $jQval.unobtrusive.parse(document);
+    });
+} (jQuery));
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: 96e709fb-8bcd-4155-a158-95dcae855f27
+   -------------------*/
+(function($) {
+    var findByName = function(currentForm, name) {
+        return currentForm.find("[name='" + name + "']");
+    };
+
+    var findCurrentForm = function(element) {
+        return $(element).closest('form');
+    };
+
+    $.validator.addMethod("enforcetrue", function (value, element, param) {
+        return element.checked;
+    });
+
+    $.validator.unobtrusive.adapters.addBool("enforcetrue");
+
+    $.validator.unobtrusive.adapters.add(
+        'atleastonerequired', ['properties'], function (options) {
+            options.rules['atleastonerequired'] = options.params;
+            options.messages['atleastonerequired'] = options.message;
+        }
+    );
+
+    $.validator.addMethod('atleastonerequired', function (value, element, params) {
+    
+        var $myForm = findCurrentForm(element);
+    
+        var properties = params.properties.split(',');
+        var values = $.map(properties, function (property, index) {        
+            var val = findByName($myForm, property).val();
+            return val != '' ? val : null;
+        });
+        return values.length > 0;
+    }, '');
+
+
+    $.validator.unobtrusive.adapters.add(
+        'requiredor', ['otherproperties'], function (options) {
+            options.rules['requiredor'] = options.params;
+            options.messages['requiredor'] = options.message;
+        }
+    );
+
+    $.validator.addMethod('requiredor', function (value, element, params) {
+
+        if (value != '') return true;
+        var $myForm = findCurrentForm(element);    
+        var properties = params.otherproperties.split(',');
+        var values = $.map(properties, function (property, index) {        
+            var val = findByName($myForm, property).val();
+            return val != '' ? val : null;
+        });
+        return values.length > 0;
+    }, '');
+
+})(window.jQuery);
+
+
+
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: 22cea6e3-10fa-4392-843a-9bbfb6070d84
+   -------------------*/
+/*!
+ * Bootstrap v3.3.0 (http://getbootstrap.com)
+ * Copyright 2011-2014 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+if("undefined"==typeof jQuery)throw new Error("Bootstrap's JavaScript requires jQuery");+function(a){var b=a.fn.jquery.split(" ")[0].split(".");if(b[0]<2&&b[1]<9||1==b[0]&&9==b[1]&&b[2]<1)throw new Error("Bootstrap's JavaScript requires jQuery version 1.9.1 or higher")}(jQuery),+function(a){"use strict";function b(){var a=document.createElement("bootstrap"),b={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(var c in b)if(void 0!==a.style[c])return{end:b[c]};return!1}a.fn.emulateTransitionEnd=function(b){var c=!1,d=this;a(this).one("bsTransitionEnd",function(){c=!0});var e=function(){c||a(d).trigger(a.support.transition.end)};return setTimeout(e,b),this},a(function(){a.support.transition=b(),a.support.transition&&(a.event.special.bsTransitionEnd={bindType:a.support.transition.end,delegateType:a.support.transition.end,handle:function(b){return a(b.target).is(this)?b.handleObj.handler.apply(this,arguments):void 0}})})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var c=a(this),e=c.data("bs.alert");e||c.data("bs.alert",e=new d(this)),"string"==typeof b&&e[b].call(c)})}var c='[data-dismiss="alert"]',d=function(b){a(b).on("click",c,this.close)};d.VERSION="3.3.0",d.TRANSITION_DURATION=150,d.prototype.close=function(b){function c(){g.detach().trigger("closed.bs.alert").remove()}var e=a(this),f=e.attr("data-target");f||(f=e.attr("href"),f=f&&f.replace(/.*(?=#[^\s]*$)/,""));var g=a(f);b&&b.preventDefault(),g.length||(g=e.closest(".alert")),g.trigger(b=a.Event("close.bs.alert")),b.isDefaultPrevented()||(g.removeClass("in"),a.support.transition&&g.hasClass("fade")?g.one("bsTransitionEnd",c).emulateTransitionEnd(d.TRANSITION_DURATION):c())};var e=a.fn.alert;a.fn.alert=b,a.fn.alert.Constructor=d,a.fn.alert.noConflict=function(){return a.fn.alert=e,this},a(document).on("click.bs.alert.data-api",c,d.prototype.close)}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.button"),f="object"==typeof b&&b;e||d.data("bs.button",e=new c(this,f)),"toggle"==b?e.toggle():b&&e.setState(b)})}var c=function(b,d){this.$element=a(b),this.options=a.extend({},c.DEFAULTS,d),this.isLoading=!1};c.VERSION="3.3.0",c.DEFAULTS={loadingText:"loading..."},c.prototype.setState=function(b){var c="disabled",d=this.$element,e=d.is("input")?"val":"html",f=d.data();b+="Text",null==f.resetText&&d.data("resetText",d[e]()),setTimeout(a.proxy(function(){d[e](null==f[b]?this.options[b]:f[b]),"loadingText"==b?(this.isLoading=!0,d.addClass(c).attr(c,c)):this.isLoading&&(this.isLoading=!1,d.removeClass(c).removeAttr(c))},this),0)},c.prototype.toggle=function(){var a=!0,b=this.$element.closest('[data-toggle="buttons"]');if(b.length){var c=this.$element.find("input");"radio"==c.prop("type")&&(c.prop("checked")&&this.$element.hasClass("active")?a=!1:b.find(".active").removeClass("active")),a&&c.prop("checked",!this.$element.hasClass("active")).trigger("change")}else this.$element.attr("aria-pressed",!this.$element.hasClass("active"));a&&this.$element.toggleClass("active")};var d=a.fn.button;a.fn.button=b,a.fn.button.Constructor=c,a.fn.button.noConflict=function(){return a.fn.button=d,this},a(document).on("click.bs.button.data-api",'[data-toggle^="button"]',function(c){var d=a(c.target);d.hasClass("btn")||(d=d.closest(".btn")),b.call(d,"toggle"),c.preventDefault()}).on("focus.bs.button.data-api blur.bs.button.data-api",'[data-toggle^="button"]',function(b){a(b.target).closest(".btn").toggleClass("focus","focus"==b.type)})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.carousel"),f=a.extend({},c.DEFAULTS,d.data(),"object"==typeof b&&b),g="string"==typeof b?b:f.slide;e||d.data("bs.carousel",e=new c(this,f)),"number"==typeof b?e.to(b):g?e[g]():f.interval&&e.pause().cycle()})}var c=function(b,c){this.$element=a(b),this.$indicators=this.$element.find(".carousel-indicators"),this.options=c,this.paused=this.sliding=this.interval=this.$active=this.$items=null,this.options.keyboard&&this.$element.on("keydown.bs.carousel",a.proxy(this.keydown,this)),"hover"==this.options.pause&&!("ontouchstart"in document.documentElement)&&this.$element.on("mouseenter.bs.carousel",a.proxy(this.pause,this)).on("mouseleave.bs.carousel",a.proxy(this.cycle,this))};c.VERSION="3.3.0",c.TRANSITION_DURATION=600,c.DEFAULTS={interval:5e3,pause:"hover",wrap:!0,keyboard:!0},c.prototype.keydown=function(a){switch(a.which){case 37:this.prev();break;case 39:this.next();break;default:return}a.preventDefault()},c.prototype.cycle=function(b){return b||(this.paused=!1),this.interval&&clearInterval(this.interval),this.options.interval&&!this.paused&&(this.interval=setInterval(a.proxy(this.next,this),this.options.interval)),this},c.prototype.getItemIndex=function(a){return this.$items=a.parent().children(".item"),this.$items.index(a||this.$active)},c.prototype.getItemForDirection=function(a,b){var c="prev"==a?-1:1,d=this.getItemIndex(b),e=(d+c)%this.$items.length;return this.$items.eq(e)},c.prototype.to=function(a){var b=this,c=this.getItemIndex(this.$active=this.$element.find(".item.active"));return a>this.$items.length-1||0>a?void 0:this.sliding?this.$element.one("slid.bs.carousel",function(){b.to(a)}):c==a?this.pause().cycle():this.slide(a>c?"next":"prev",this.$items.eq(a))},c.prototype.pause=function(b){return b||(this.paused=!0),this.$element.find(".next, .prev").length&&a.support.transition&&(this.$element.trigger(a.support.transition.end),this.cycle(!0)),this.interval=clearInterval(this.interval),this},c.prototype.next=function(){return this.sliding?void 0:this.slide("next")},c.prototype.prev=function(){return this.sliding?void 0:this.slide("prev")},c.prototype.slide=function(b,d){var e=this.$element.find(".item.active"),f=d||this.getItemForDirection(b,e),g=this.interval,h="next"==b?"left":"right",i="next"==b?"first":"last",j=this;if(!f.length){if(!this.options.wrap)return;f=this.$element.find(".item")[i]()}if(f.hasClass("active"))return this.sliding=!1;var k=f[0],l=a.Event("slide.bs.carousel",{relatedTarget:k,direction:h});if(this.$element.trigger(l),!l.isDefaultPrevented()){if(this.sliding=!0,g&&this.pause(),this.$indicators.length){this.$indicators.find(".active").removeClass("active");var m=a(this.$indicators.children()[this.getItemIndex(f)]);m&&m.addClass("active")}var n=a.Event("slid.bs.carousel",{relatedTarget:k,direction:h});return a.support.transition&&this.$element.hasClass("slide")?(f.addClass(b),f[0].offsetWidth,e.addClass(h),f.addClass(h),e.one("bsTransitionEnd",function(){f.removeClass([b,h].join(" ")).addClass("active"),e.removeClass(["active",h].join(" ")),j.sliding=!1,setTimeout(function(){j.$element.trigger(n)},0)}).emulateTransitionEnd(c.TRANSITION_DURATION)):(e.removeClass("active"),f.addClass("active"),this.sliding=!1,this.$element.trigger(n)),g&&this.cycle(),this}};var d=a.fn.carousel;a.fn.carousel=b,a.fn.carousel.Constructor=c,a.fn.carousel.noConflict=function(){return a.fn.carousel=d,this};var e=function(c){var d,e=a(this),f=a(e.attr("data-target")||(d=e.attr("href"))&&d.replace(/.*(?=#[^\s]+$)/,""));if(f.hasClass("carousel")){var g=a.extend({},f.data(),e.data()),h=e.attr("data-slide-to");h&&(g.interval=!1),b.call(f,g),h&&f.data("bs.carousel").to(h),c.preventDefault()}};a(document).on("click.bs.carousel.data-api","[data-slide]",e).on("click.bs.carousel.data-api","[data-slide-to]",e),a(window).on("load",function(){a('[data-ride="carousel"]').each(function(){var c=a(this);b.call(c,c.data())})})}(jQuery),+function(a){"use strict";function b(b){var c,d=b.attr("data-target")||(c=b.attr("href"))&&c.replace(/.*(?=#[^\s]+$)/,"");return a(d)}function c(b){return this.each(function(){var c=a(this),e=c.data("bs.collapse"),f=a.extend({},d.DEFAULTS,c.data(),"object"==typeof b&&b);!e&&f.toggle&&"show"==b&&(f.toggle=!1),e||c.data("bs.collapse",e=new d(this,f)),"string"==typeof b&&e[b]()})}var d=function(b,c){this.$element=a(b),this.options=a.extend({},d.DEFAULTS,c),this.$trigger=a(this.options.trigger).filter('[href="#'+b.id+'"], [data-target="#'+b.id+'"]'),this.transitioning=null,this.options.parent?this.$parent=this.getParent():this.addAriaAndCollapsedClass(this.$element,this.$trigger),this.options.toggle&&this.toggle()};d.VERSION="3.3.0",d.TRANSITION_DURATION=350,d.DEFAULTS={toggle:!0,trigger:'[data-toggle="collapse"]'},d.prototype.dimension=function(){var a=this.$element.hasClass("width");return a?"width":"height"},d.prototype.show=function(){if(!this.transitioning&&!this.$element.hasClass("in")){var b,e=this.$parent&&this.$parent.find("> .panel").children(".in, .collapsing");if(!(e&&e.length&&(b=e.data("bs.collapse"),b&&b.transitioning))){var f=a.Event("show.bs.collapse");if(this.$element.trigger(f),!f.isDefaultPrevented()){e&&e.length&&(c.call(e,"hide"),b||e.data("bs.collapse",null));var g=this.dimension();this.$element.removeClass("collapse").addClass("collapsing")[g](0).attr("aria-expanded",!0),this.$trigger.removeClass("collapsed").attr("aria-expanded",!0),this.transitioning=1;var h=function(){this.$element.removeClass("collapsing").addClass("collapse in")[g](""),this.transitioning=0,this.$element.trigger("shown.bs.collapse")};if(!a.support.transition)return h.call(this);var i=a.camelCase(["scroll",g].join("-"));this.$element.one("bsTransitionEnd",a.proxy(h,this)).emulateTransitionEnd(d.TRANSITION_DURATION)[g](this.$element[0][i])}}}},d.prototype.hide=function(){if(!this.transitioning&&this.$element.hasClass("in")){var b=a.Event("hide.bs.collapse");if(this.$element.trigger(b),!b.isDefaultPrevented()){var c=this.dimension();this.$element[c](this.$element[c]())[0].offsetHeight,this.$element.addClass("collapsing").removeClass("collapse in").attr("aria-expanded",!1),this.$trigger.addClass("collapsed").attr("aria-expanded",!1),this.transitioning=1;var e=function(){this.transitioning=0,this.$element.removeClass("collapsing").addClass("collapse").trigger("hidden.bs.collapse")};return a.support.transition?void this.$element[c](0).one("bsTransitionEnd",a.proxy(e,this)).emulateTransitionEnd(d.TRANSITION_DURATION):e.call(this)}}},d.prototype.toggle=function(){this[this.$element.hasClass("in")?"hide":"show"]()},d.prototype.getParent=function(){return a(this.options.parent).find('[data-toggle="collapse"][data-parent="'+this.options.parent+'"]').each(a.proxy(function(c,d){var e=a(d);this.addAriaAndCollapsedClass(b(e),e)},this)).end()},d.prototype.addAriaAndCollapsedClass=function(a,b){var c=a.hasClass("in");a.attr("aria-expanded",c),b.toggleClass("collapsed",!c).attr("aria-expanded",c)};var e=a.fn.collapse;a.fn.collapse=c,a.fn.collapse.Constructor=d,a.fn.collapse.noConflict=function(){return a.fn.collapse=e,this},a(document).on("click.bs.collapse.data-api",'[data-toggle="collapse"]',function(d){var e=a(this);e.attr("data-target")||d.preventDefault();var f=b(e),g=f.data("bs.collapse"),h=g?"toggle":a.extend({},e.data(),{trigger:this});c.call(f,h)})}(jQuery),+function(a){"use strict";function b(b){b&&3===b.which||(a(e).remove(),a(f).each(function(){var d=a(this),e=c(d),f={relatedTarget:this};e.hasClass("open")&&(e.trigger(b=a.Event("hide.bs.dropdown",f)),b.isDefaultPrevented()||(d.attr("aria-expanded","false"),e.removeClass("open").trigger("hidden.bs.dropdown",f)))}))}function c(b){var c=b.attr("data-target");c||(c=b.attr("href"),c=c&&/#[A-Za-z]/.test(c)&&c.replace(/.*(?=#[^\s]*$)/,""));var d=c&&a(c);return d&&d.length?d:b.parent()}function d(b){return this.each(function(){var c=a(this),d=c.data("bs.dropdown");d||c.data("bs.dropdown",d=new g(this)),"string"==typeof b&&d[b].call(c)})}var e=".dropdown-backdrop",f='[data-toggle="dropdown"]',g=function(b){a(b).on("click.bs.dropdown",this.toggle)};g.VERSION="3.3.0",g.prototype.toggle=function(d){var e=a(this);if(!e.is(".disabled, :disabled")){var f=c(e),g=f.hasClass("open");if(b(),!g){"ontouchstart"in document.documentElement&&!f.closest(".navbar-nav").length&&a('<div class="dropdown-backdrop"/>').insertAfter(a(this)).on("click",b);var h={relatedTarget:this};if(f.trigger(d=a.Event("show.bs.dropdown",h)),d.isDefaultPrevented())return;e.trigger("focus").attr("aria-expanded","true"),f.toggleClass("open").trigger("shown.bs.dropdown",h)}return!1}},g.prototype.keydown=function(b){if(/(38|40|27|32)/.test(b.which)){var d=a(this);if(b.preventDefault(),b.stopPropagation(),!d.is(".disabled, :disabled")){var e=c(d),g=e.hasClass("open");if(!g&&27!=b.which||g&&27==b.which)return 27==b.which&&e.find(f).trigger("focus"),d.trigger("click");var h=" li:not(.divider):visible a",i=e.find('[role="menu"]'+h+', [role="listbox"]'+h);if(i.length){var j=i.index(b.target);38==b.which&&j>0&&j--,40==b.which&&j<i.length-1&&j++,~j||(j=0),i.eq(j).trigger("focus")}}}};var h=a.fn.dropdown;a.fn.dropdown=d,a.fn.dropdown.Constructor=g,a.fn.dropdown.noConflict=function(){return a.fn.dropdown=h,this},a(document).on("click.bs.dropdown.data-api",b).on("click.bs.dropdown.data-api",".dropdown form",function(a){a.stopPropagation()}).on("click.bs.dropdown.data-api",f,g.prototype.toggle).on("keydown.bs.dropdown.data-api",f,g.prototype.keydown).on("keydown.bs.dropdown.data-api",'[role="menu"]',g.prototype.keydown).on("keydown.bs.dropdown.data-api",'[role="listbox"]',g.prototype.keydown)}(jQuery),+function(a){"use strict";function b(b,d){return this.each(function(){var e=a(this),f=e.data("bs.modal"),g=a.extend({},c.DEFAULTS,e.data(),"object"==typeof b&&b);f||e.data("bs.modal",f=new c(this,g)),"string"==typeof b?f[b](d):g.show&&f.show(d)})}var c=function(b,c){this.options=c,this.$body=a(document.body),this.$element=a(b),this.$backdrop=this.isShown=null,this.scrollbarWidth=0,this.options.remote&&this.$element.find(".modal-content").load(this.options.remote,a.proxy(function(){this.$element.trigger("loaded.bs.modal")},this))};c.VERSION="3.3.0",c.TRANSITION_DURATION=300,c.BACKDROP_TRANSITION_DURATION=150,c.DEFAULTS={backdrop:!0,keyboard:!0,show:!0},c.prototype.toggle=function(a){return this.isShown?this.hide():this.show(a)},c.prototype.show=function(b){var d=this,e=a.Event("show.bs.modal",{relatedTarget:b});this.$element.trigger(e),this.isShown||e.isDefaultPrevented()||(this.isShown=!0,this.checkScrollbar(),this.$body.addClass("modal-open"),this.setScrollbar(),this.escape(),this.$element.on("click.dismiss.bs.modal",'[data-dismiss="modal"]',a.proxy(this.hide,this)),this.backdrop(function(){var e=a.support.transition&&d.$element.hasClass("fade");d.$element.parent().length||d.$element.appendTo(d.$body),d.$element.show().scrollTop(0),e&&d.$element[0].offsetWidth,d.$element.addClass("in").attr("aria-hidden",!1),d.enforceFocus();var f=a.Event("shown.bs.modal",{relatedTarget:b});e?d.$element.find(".modal-dialog").one("bsTransitionEnd",function(){d.$element.trigger("focus").trigger(f)}).emulateTransitionEnd(c.TRANSITION_DURATION):d.$element.trigger("focus").trigger(f)}))},c.prototype.hide=function(b){b&&b.preventDefault(),b=a.Event("hide.bs.modal"),this.$element.trigger(b),this.isShown&&!b.isDefaultPrevented()&&(this.isShown=!1,this.escape(),a(document).off("focusin.bs.modal"),this.$element.removeClass("in").attr("aria-hidden",!0).off("click.dismiss.bs.modal"),a.support.transition&&this.$element.hasClass("fade")?this.$element.one("bsTransitionEnd",a.proxy(this.hideModal,this)).emulateTransitionEnd(c.TRANSITION_DURATION):this.hideModal())},c.prototype.enforceFocus=function(){a(document).off("focusin.bs.modal").on("focusin.bs.modal",a.proxy(function(a){this.$element[0]===a.target||this.$element.has(a.target).length||this.$element.trigger("focus")},this))},c.prototype.escape=function(){this.isShown&&this.options.keyboard?this.$element.on("keydown.dismiss.bs.modal",a.proxy(function(a){27==a.which&&this.hide()},this)):this.isShown||this.$element.off("keydown.dismiss.bs.modal")},c.prototype.hideModal=function(){var a=this;this.$element.hide(),this.backdrop(function(){a.$body.removeClass("modal-open"),a.resetScrollbar(),a.$element.trigger("hidden.bs.modal")})},c.prototype.removeBackdrop=function(){this.$backdrop&&this.$backdrop.remove(),this.$backdrop=null},c.prototype.backdrop=function(b){var d=this,e=this.$element.hasClass("fade")?"fade":"";if(this.isShown&&this.options.backdrop){var f=a.support.transition&&e;if(this.$backdrop=a('<div class="modal-backdrop '+e+'" />').prependTo(this.$element).on("click.dismiss.bs.modal",a.proxy(function(a){a.target===a.currentTarget&&("static"==this.options.backdrop?this.$element[0].focus.call(this.$element[0]):this.hide.call(this))},this)),f&&this.$backdrop[0].offsetWidth,this.$backdrop.addClass("in"),!b)return;f?this.$backdrop.one("bsTransitionEnd",b).emulateTransitionEnd(c.BACKDROP_TRANSITION_DURATION):b()}else if(!this.isShown&&this.$backdrop){this.$backdrop.removeClass("in");var g=function(){d.removeBackdrop(),b&&b()};a.support.transition&&this.$element.hasClass("fade")?this.$backdrop.one("bsTransitionEnd",g).emulateTransitionEnd(c.BACKDROP_TRANSITION_DURATION):g()}else b&&b()},c.prototype.checkScrollbar=function(){this.scrollbarWidth=this.measureScrollbar()},c.prototype.setScrollbar=function(){var a=parseInt(this.$body.css("padding-right")||0,10);this.scrollbarWidth&&this.$body.css("padding-right",a+this.scrollbarWidth)},c.prototype.resetScrollbar=function(){this.$body.css("padding-right","")},c.prototype.measureScrollbar=function(){if(document.body.clientWidth>=window.innerWidth)return 0;var a=document.createElement("div");a.className="modal-scrollbar-measure",this.$body.append(a);var b=a.offsetWidth-a.clientWidth;return this.$body[0].removeChild(a),b};var d=a.fn.modal;a.fn.modal=b,a.fn.modal.Constructor=c,a.fn.modal.noConflict=function(){return a.fn.modal=d,this},a(document).on("click.bs.modal.data-api",'[data-toggle="modal"]',function(c){var d=a(this),e=d.attr("href"),f=a(d.attr("data-target")||e&&e.replace(/.*(?=#[^\s]+$)/,"")),g=f.data("bs.modal")?"toggle":a.extend({remote:!/#/.test(e)&&e},f.data(),d.data());d.is("a")&&c.preventDefault(),f.one("show.bs.modal",function(a){a.isDefaultPrevented()||f.one("hidden.bs.modal",function(){d.is(":visible")&&d.trigger("focus")})}),b.call(f,g,this)})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.tooltip"),f="object"==typeof b&&b,g=f&&f.selector;(e||"destroy"!=b)&&(g?(e||d.data("bs.tooltip",e={}),e[g]||(e[g]=new c(this,f))):e||d.data("bs.tooltip",e=new c(this,f)),"string"==typeof b&&e[b]())})}var c=function(a,b){this.type=this.options=this.enabled=this.timeout=this.hoverState=this.$element=null,this.init("tooltip",a,b)};c.VERSION="3.3.0",c.TRANSITION_DURATION=150,c.DEFAULTS={animation:!0,placement:"top",selector:!1,template:'<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',trigger:"hover focus",title:"",delay:0,html:!1,container:!1,viewport:{selector:"body",padding:0}},c.prototype.init=function(b,c,d){this.enabled=!0,this.type=b,this.$element=a(c),this.options=this.getOptions(d),this.$viewport=this.options.viewport&&a(this.options.viewport.selector||this.options.viewport);for(var e=this.options.trigger.split(" "),f=e.length;f--;){var g=e[f];if("click"==g)this.$element.on("click."+this.type,this.options.selector,a.proxy(this.toggle,this));else if("manual"!=g){var h="hover"==g?"mouseenter":"focusin",i="hover"==g?"mouseleave":"focusout";this.$element.on(h+"."+this.type,this.options.selector,a.proxy(this.enter,this)),this.$element.on(i+"."+this.type,this.options.selector,a.proxy(this.leave,this))}}this.options.selector?this._options=a.extend({},this.options,{trigger:"manual",selector:""}):this.fixTitle()},c.prototype.getDefaults=function(){return c.DEFAULTS},c.prototype.getOptions=function(b){return b=a.extend({},this.getDefaults(),this.$element.data(),b),b.delay&&"number"==typeof b.delay&&(b.delay={show:b.delay,hide:b.delay}),b},c.prototype.getDelegateOptions=function(){var b={},c=this.getDefaults();return this._options&&a.each(this._options,function(a,d){c[a]!=d&&(b[a]=d)}),b},c.prototype.enter=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget).data("bs."+this.type);return c&&c.$tip&&c.$tip.is(":visible")?void(c.hoverState="in"):(c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c)),clearTimeout(c.timeout),c.hoverState="in",c.options.delay&&c.options.delay.show?void(c.timeout=setTimeout(function(){"in"==c.hoverState&&c.show()},c.options.delay.show)):c.show())},c.prototype.leave=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget).data("bs."+this.type);return c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c)),clearTimeout(c.timeout),c.hoverState="out",c.options.delay&&c.options.delay.hide?void(c.timeout=setTimeout(function(){"out"==c.hoverState&&c.hide()},c.options.delay.hide)):c.hide()},c.prototype.show=function(){var b=a.Event("show.bs."+this.type);if(this.hasContent()&&this.enabled){this.$element.trigger(b);var d=a.contains(this.$element[0].ownerDocument.documentElement,this.$element[0]);if(b.isDefaultPrevented()||!d)return;var e=this,f=this.tip(),g=this.getUID(this.type);this.setContent(),f.attr("id",g),this.$element.attr("aria-describedby",g),this.options.animation&&f.addClass("fade");var h="function"==typeof this.options.placement?this.options.placement.call(this,f[0],this.$element[0]):this.options.placement,i=/\s?auto?\s?/i,j=i.test(h);j&&(h=h.replace(i,"")||"top"),f.detach().css({top:0,left:0,display:"block"}).addClass(h).data("bs."+this.type,this),this.options.container?f.appendTo(this.options.container):f.insertAfter(this.$element);var k=this.getPosition(),l=f[0].offsetWidth,m=f[0].offsetHeight;if(j){var n=h,o=this.options.container?a(this.options.container):this.$element.parent(),p=this.getPosition(o);h="bottom"==h&&k.bottom+m>p.bottom?"top":"top"==h&&k.top-m<p.top?"bottom":"right"==h&&k.right+l>p.width?"left":"left"==h&&k.left-l<p.left?"right":h,f.removeClass(n).addClass(h)}var q=this.getCalculatedOffset(h,k,l,m);this.applyPlacement(q,h);var r=function(){var a=e.hoverState;e.$element.trigger("shown.bs."+e.type),e.hoverState=null,"out"==a&&e.leave(e)};a.support.transition&&this.$tip.hasClass("fade")?f.one("bsTransitionEnd",r).emulateTransitionEnd(c.TRANSITION_DURATION):r()}},c.prototype.applyPlacement=function(b,c){var d=this.tip(),e=d[0].offsetWidth,f=d[0].offsetHeight,g=parseInt(d.css("margin-top"),10),h=parseInt(d.css("margin-left"),10);isNaN(g)&&(g=0),isNaN(h)&&(h=0),b.top=b.top+g,b.left=b.left+h,a.offset.setOffset(d[0],a.extend({using:function(a){d.css({top:Math.round(a.top),left:Math.round(a.left)})}},b),0),d.addClass("in");var i=d[0].offsetWidth,j=d[0].offsetHeight;"top"==c&&j!=f&&(b.top=b.top+f-j);var k=this.getViewportAdjustedDelta(c,b,i,j);k.left?b.left+=k.left:b.top+=k.top;var l=/top|bottom/.test(c),m=l?2*k.left-e+i:2*k.top-f+j,n=l?"offsetWidth":"offsetHeight";d.offset(b),this.replaceArrow(m,d[0][n],l)},c.prototype.replaceArrow=function(a,b,c){this.arrow().css(c?"left":"top",50*(1-a/b)+"%").css(c?"top":"left","")},c.prototype.setContent=function(){var a=this.tip(),b=this.getTitle();a.find(".tooltip-inner")[this.options.html?"html":"text"](b),a.removeClass("fade in top bottom left right")},c.prototype.hide=function(b){function d(){"in"!=e.hoverState&&f.detach(),e.$element.removeAttr("aria-describedby").trigger("hidden.bs."+e.type),b&&b()}var e=this,f=this.tip(),g=a.Event("hide.bs."+this.type);return this.$element.trigger(g),g.isDefaultPrevented()?void 0:(f.removeClass("in"),a.support.transition&&this.$tip.hasClass("fade")?f.one("bsTransitionEnd",d).emulateTransitionEnd(c.TRANSITION_DURATION):d(),this.hoverState=null,this)},c.prototype.fixTitle=function(){var a=this.$element;(a.attr("title")||"string"!=typeof a.attr("data-original-title"))&&a.attr("data-original-title",a.attr("title")||"").attr("title","")},c.prototype.hasContent=function(){return this.getTitle()},c.prototype.getPosition=function(b){b=b||this.$element;var c=b[0],d="BODY"==c.tagName,e=c.getBoundingClientRect();null==e.width&&(e=a.extend({},e,{width:e.right-e.left,height:e.bottom-e.top}));var f=d?{top:0,left:0}:b.offset(),g={scroll:d?document.documentElement.scrollTop||document.body.scrollTop:b.scrollTop()},h=d?{width:a(window).width(),height:a(window).height()}:null;return a.extend({},e,g,h,f)},c.prototype.getCalculatedOffset=function(a,b,c,d){return"bottom"==a?{top:b.top+b.height,left:b.left+b.width/2-c/2}:"top"==a?{top:b.top-d,left:b.left+b.width/2-c/2}:"left"==a?{top:b.top+b.height/2-d/2,left:b.left-c}:{top:b.top+b.height/2-d/2,left:b.left+b.width}},c.prototype.getViewportAdjustedDelta=function(a,b,c,d){var e={top:0,left:0};if(!this.$viewport)return e;var f=this.options.viewport&&this.options.viewport.padding||0,g=this.getPosition(this.$viewport);if(/right|left/.test(a)){var h=b.top-f-g.scroll,i=b.top+f-g.scroll+d;h<g.top?e.top=g.top-h:i>g.top+g.height&&(e.top=g.top+g.height-i)}else{var j=b.left-f,k=b.left+f+c;j<g.left?e.left=g.left-j:k>g.width&&(e.left=g.left+g.width-k)}return e},c.prototype.getTitle=function(){var a,b=this.$element,c=this.options;return a=b.attr("data-original-title")||("function"==typeof c.title?c.title.call(b[0]):c.title)},c.prototype.getUID=function(a){do a+=~~(1e6*Math.random());while(document.getElementById(a));return a},c.prototype.tip=function(){return this.$tip=this.$tip||a(this.options.template)},c.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".tooltip-arrow")},c.prototype.enable=function(){this.enabled=!0},c.prototype.disable=function(){this.enabled=!1},c.prototype.toggleEnabled=function(){this.enabled=!this.enabled},c.prototype.toggle=function(b){var c=this;b&&(c=a(b.currentTarget).data("bs."+this.type),c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c))),c.tip().hasClass("in")?c.leave(c):c.enter(c)},c.prototype.destroy=function(){var a=this;clearTimeout(this.timeout),this.hide(function(){a.$element.off("."+a.type).removeData("bs."+a.type)})};var d=a.fn.tooltip;a.fn.tooltip=b,a.fn.tooltip.Constructor=c,a.fn.tooltip.noConflict=function(){return a.fn.tooltip=d,this}}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.popover"),f="object"==typeof b&&b,g=f&&f.selector;(e||"destroy"!=b)&&(g?(e||d.data("bs.popover",e={}),e[g]||(e[g]=new c(this,f))):e||d.data("bs.popover",e=new c(this,f)),"string"==typeof b&&e[b]())})}var c=function(a,b){this.init("popover",a,b)};if(!a.fn.tooltip)throw new Error("Popover requires tooltip.js");c.VERSION="3.3.0",c.DEFAULTS=a.extend({},a.fn.tooltip.Constructor.DEFAULTS,{placement:"right",trigger:"click",content:"",template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'}),c.prototype=a.extend({},a.fn.tooltip.Constructor.prototype),c.prototype.constructor=c,c.prototype.getDefaults=function(){return c.DEFAULTS},c.prototype.setContent=function(){var a=this.tip(),b=this.getTitle(),c=this.getContent();a.find(".popover-title")[this.options.html?"html":"text"](b),a.find(".popover-content").children().detach().end()[this.options.html?"string"==typeof c?"html":"append":"text"](c),a.removeClass("fade top bottom left right in"),a.find(".popover-title").html()||a.find(".popover-title").hide()},c.prototype.hasContent=function(){return this.getTitle()||this.getContent()},c.prototype.getContent=function(){var a=this.$element,b=this.options;return a.attr("data-content")||("function"==typeof b.content?b.content.call(a[0]):b.content)},c.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".arrow")},c.prototype.tip=function(){return this.$tip||(this.$tip=a(this.options.template)),this.$tip};var d=a.fn.popover;a.fn.popover=b,a.fn.popover.Constructor=c,a.fn.popover.noConflict=function(){return a.fn.popover=d,this}}(jQuery),+function(a){"use strict";function b(c,d){var e=a.proxy(this.process,this);this.$body=a("body"),this.$scrollElement=a(a(c).is("body")?window:c),this.options=a.extend({},b.DEFAULTS,d),this.selector=(this.options.target||"")+" .nav li > a",this.offsets=[],this.targets=[],this.activeTarget=null,this.scrollHeight=0,this.$scrollElement.on("scroll.bs.scrollspy",e),this.refresh(),this.process()}function c(c){return this.each(function(){var d=a(this),e=d.data("bs.scrollspy"),f="object"==typeof c&&c;e||d.data("bs.scrollspy",e=new b(this,f)),"string"==typeof c&&e[c]()})}b.VERSION="3.3.0",b.DEFAULTS={offset:10},b.prototype.getScrollHeight=function(){return this.$scrollElement[0].scrollHeight||Math.max(this.$body[0].scrollHeight,document.documentElement.scrollHeight)},b.prototype.refresh=function(){var b="offset",c=0;a.isWindow(this.$scrollElement[0])||(b="position",c=this.$scrollElement.scrollTop()),this.offsets=[],this.targets=[],this.scrollHeight=this.getScrollHeight();var d=this;this.$body.find(this.selector).map(function(){var d=a(this),e=d.data("target")||d.attr("href"),f=/^#./.test(e)&&a(e);return f&&f.length&&f.is(":visible")&&[[f[b]().top+c,e]]||null}).sort(function(a,b){return a[0]-b[0]}).each(function(){d.offsets.push(this[0]),d.targets.push(this[1])})},b.prototype.process=function(){var a,b=this.$scrollElement.scrollTop()+this.options.offset,c=this.getScrollHeight(),d=this.options.offset+c-this.$scrollElement.height(),e=this.offsets,f=this.targets,g=this.activeTarget;if(this.scrollHeight!=c&&this.refresh(),b>=d)return g!=(a=f[f.length-1])&&this.activate(a);if(g&&b<e[0])return this.activeTarget=null,this.clear();for(a=e.length;a--;)g!=f[a]&&b>=e[a]&&(!e[a+1]||b<=e[a+1])&&this.activate(f[a])},b.prototype.activate=function(b){this.activeTarget=b,this.clear();var c=this.selector+'[data-target="'+b+'"],'+this.selector+'[href="'+b+'"]',d=a(c).parents("li").addClass("active");d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active")),d.trigger("activate.bs.scrollspy")},b.prototype.clear=function(){a(this.selector).parentsUntil(this.options.target,".active").removeClass("active")};var d=a.fn.scrollspy;a.fn.scrollspy=c,a.fn.scrollspy.Constructor=b,a.fn.scrollspy.noConflict=function(){return a.fn.scrollspy=d,this},a(window).on("load.bs.scrollspy.data-api",function(){a('[data-spy="scroll"]').each(function(){var b=a(this);c.call(b,b.data())})})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.tab");e||d.data("bs.tab",e=new c(this)),"string"==typeof b&&e[b]()})}var c=function(b){this.element=a(b)};c.VERSION="3.3.0",c.TRANSITION_DURATION=150,c.prototype.show=function(){var b=this.element,c=b.closest("ul:not(.dropdown-menu)"),d=b.data("target");if(d||(d=b.attr("href"),d=d&&d.replace(/.*(?=#[^\s]*$)/,"")),!b.parent("li").hasClass("active")){var e=c.find(".active:last a"),f=a.Event("hide.bs.tab",{relatedTarget:b[0]}),g=a.Event("show.bs.tab",{relatedTarget:e[0]});if(e.trigger(f),b.trigger(g),!g.isDefaultPrevented()&&!f.isDefaultPrevented()){var h=a(d);this.activate(b.closest("li"),c),this.activate(h,h.parent(),function(){e.trigger({type:"hidden.bs.tab",relatedTarget:b[0]}),b.trigger({type:"shown.bs.tab",relatedTarget:e[0]})})}}},c.prototype.activate=function(b,d,e){function f(){g.removeClass("active").find("> .dropdown-menu > .active").removeClass("active").end().find('[data-toggle="tab"]').attr("aria-expanded",!1),b.addClass("active").find('[data-toggle="tab"]').attr("aria-expanded",!0),h?(b[0].offsetWidth,b.addClass("in")):b.removeClass("fade"),b.parent(".dropdown-menu")&&b.closest("li.dropdown").addClass("active").end().find('[data-toggle="tab"]').attr("aria-expanded",!0),e&&e()}var g=d.find("> .active"),h=e&&a.support.transition&&(g.length&&g.hasClass("fade")||!!d.find("> .fade").length);g.length&&h?g.one("bsTransitionEnd",f).emulateTransitionEnd(c.TRANSITION_DURATION):f(),g.removeClass("in")};var d=a.fn.tab;a.fn.tab=b,a.fn.tab.Constructor=c,a.fn.tab.noConflict=function(){return a.fn.tab=d,this};var e=function(c){c.preventDefault(),b.call(a(this),"show")};a(document).on("click.bs.tab.data-api",'[data-toggle="tab"]',e).on("click.bs.tab.data-api",'[data-toggle="pill"]',e)
+}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.affix"),f="object"==typeof b&&b;e||d.data("bs.affix",e=new c(this,f)),"string"==typeof b&&e[b]()})}var c=function(b,d){this.options=a.extend({},c.DEFAULTS,d),this.$target=a(this.options.target).on("scroll.bs.affix.data-api",a.proxy(this.checkPosition,this)).on("click.bs.affix.data-api",a.proxy(this.checkPositionWithEventLoop,this)),this.$element=a(b),this.affixed=this.unpin=this.pinnedOffset=null,this.checkPosition()};c.VERSION="3.3.0",c.RESET="affix affix-top affix-bottom",c.DEFAULTS={offset:0,target:window},c.prototype.getState=function(a,b,c,d){var e=this.$target.scrollTop(),f=this.$element.offset(),g=this.$target.height();if(null!=c&&"top"==this.affixed)return c>e?"top":!1;if("bottom"==this.affixed)return null!=c?e+this.unpin<=f.top?!1:"bottom":a-d>=e+g?!1:"bottom";var h=null==this.affixed,i=h?e:f.top,j=h?g:b;return null!=c&&c>=i?"top":null!=d&&i+j>=a-d?"bottom":!1},c.prototype.getPinnedOffset=function(){if(this.pinnedOffset)return this.pinnedOffset;this.$element.removeClass(c.RESET).addClass("affix");var a=this.$target.scrollTop(),b=this.$element.offset();return this.pinnedOffset=b.top-a},c.prototype.checkPositionWithEventLoop=function(){setTimeout(a.proxy(this.checkPosition,this),1)},c.prototype.checkPosition=function(){if(this.$element.is(":visible")){var b=this.$element.height(),d=this.options.offset,e=d.top,f=d.bottom,g=a("body").height();"object"!=typeof d&&(f=e=d),"function"==typeof e&&(e=d.top(this.$element)),"function"==typeof f&&(f=d.bottom(this.$element));var h=this.getState(g,b,e,f);if(this.affixed!=h){null!=this.unpin&&this.$element.css("top","");var i="affix"+(h?"-"+h:""),j=a.Event(i+".bs.affix");if(this.$element.trigger(j),j.isDefaultPrevented())return;this.affixed=h,this.unpin="bottom"==h?this.getPinnedOffset():null,this.$element.removeClass(c.RESET).addClass(i).trigger(i.replace("affix","affixed")+".bs.affix")}"bottom"==h&&this.$element.offset({top:g-b-f})}};var d=a.fn.affix;a.fn.affix=b,a.fn.affix.Constructor=c,a.fn.affix.noConflict=function(){return a.fn.affix=d,this},a(window).on("load",function(){a('[data-spy="affix"]').each(function(){var c=a(this),d=c.data();d.offset=d.offset||{},null!=d.offsetBottom&&(d.offset.bottom=d.offsetBottom),null!=d.offsetTop&&(d.offset.top=d.offsetTop),b.call(c,d)})})}(jQuery);
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: eb1504da-95f2-414b-85f1-0e250eb293af
+   -------------------*/
+var BrainJocks = BrainJocks || {};
+
+BrainJocks.BootstrapUI = (function ($) {
+
+    function prepare() {
+        
+        /* anything needed to run at script load (not page load) would be declared here */
+    }
+
+    function run() {
+
+        //for font scaling
+        var causeRepaintsOn = $("h1, h2, h3, h4, h5, h6, p, li");
+        $(window).resize(function() {
+            causeRepaintsOn.css("z-index", 1);
+        });
+
+        $(".score-carousel").find(".item.score-carouselpane").removeClass("active");
+        $('.score-carousel').find(".item.score-carouselpane").first().addClass("active");
+        $('.score-carousel').each(function() {
+            // <div id="@carouselID" class="carousel slide score-carousel"  data-ride="carousel" data-rotation-speed="@speed">
+            // Set interval using data-rotation-speed
+            var $carousel = $(this);
+            var rotationSpeed = $carousel.data["rotationSpeed"];
+            if ($.isNumeric(rotationSpeed) && rotationSpeed >= 1) {
+                $carousel.carousel({ interval: rotationSpeed });
+            }
+        });
+
+        $('.score-accordion a[data-toggle="collapse"]').each(function() {
+            var accordion = $(this).closest(".score-accordion")[0];
+            $(this).attr('data-parent', '#' + accordion.id);
+        });
+
+        $('.score-tab').each(function() {
+            var tabComponent = $(this);
+            var tabsNav = tabComponent.find(".nav").first();
+            var tabsContent = tabComponent.find(".tab-content").first();
+
+            tabsContent.find(".tab-pane").each(function() {
+                var tabPane = $(this);
+                var id = tabPane.prop('id');
+                var tabTitle = tabPane.data("title");
+                var li = "<li><a href='#" + id + "' data-toggle='tab'>" + tabTitle + "</a></li>";
+                tabsNav.append(li);
+            });
+
+            tabsNav.find("li").first().addClass("active");
+            tabsContent.find("div.tab-pane").first().addClass("active");
+
+        });
+
+        $('.score-accordion').each(function() {
+            $(this).find('.panel-collapse').first().addClass("in");
+        });
+
+        $('.score-tab').each(function () {
+            $(this).find('.tab-pane').first().addClass("in");
+        });
+
+        $(".score-megamenu").find(".btn").addClass("navbar-btn");
+
+    }
+
+    return {
+        run: run,
+        prepare: prepare
+    };
+
+
+})(jQuery);
+
+/*
+Anonymous function to prepare the page prior to load being complete
+*/
+$(function () {
+    BrainJocks.BootstrapUI.prepare();
+});
+
+$(document).ready(function () {
+    BrainJocks.BootstrapUI.run();
+});
+
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: 8604384b-00a7-4e6c-a8d5-65d21201e049
+   -------------------*/
+// inView Plug-in - temp
+(function (e) { function t() { var t = e(); if (e.each(n, function (e, i) { var n = i.data.selector, a = i.$element; t = t.add(n ? a.find(n) : a) }), t.length) for (var i = 0; t.length > i; i++) if (t[i]) if (e.contains(r, t[i])) { var a = e(t[i]), c = a.data("inview"), l = a[0].getBoundingClientRect(), o = a.height() + 600, h = a.width(); l.top >= 0 - o && l.left >= 0 - h && l.bottom <= (d.innerHeight || r.clientHeight) + (o - 600) && l.right <= (d.innerWidth || r.clientWidth) + h ? c || a.data("inview", !0).trigger("inview", [!0]) : c && a.data("inview", !1).trigger("inview", [!1]) } else delete t[i] } var i, n = {}, a = document, d = window, r = a.documentElement, c = e.expando; e.event.special.inview = { add: function (a) { n[a.guid + "-" + this[c]] = { data: a, $element: e(this) }, i || e.isEmptyObject(n) || (i = setInterval(t, 333)) }, remove: function (t) { try { delete n[t.guid + "-" + this[c]] } catch (a) { } e.isEmptyObject(n) && (clearInterval(i), i = null) } } })(jQuery);
+//////////////////////////////////
+
+/*GLOBAL VARIABLES*/
+var pageUrl = location.href;
+var hostName = location.hostname;
+/*////////////////*/
+
+//set printer text url
+function setPrinterText() {
+    $(".page-url").text(pageUrl);
+}
+
+//floating desktop ISI
+if ($('#floatingDesktopISI #isiCopy').length) {
+    $('#isiCopyMobile').bind('inview', function (event, isInView) {
+        if (isInView) {
+            $("#floatingDesktopISI #isiCopy").fadeOut();
+        } else {
+            // element has gone out of viewport
+            $("#floatingDesktopISI #isiCopy").fadeIn();
+        }
+    });
+}
+
+//onclick button for black box ISI in mobile
+$("#floatingDesktopISI #isiCopy h2").click(function () {
+    $('html, body').removeAttr("style").animate({
+        scrollTop: $("#isiCopyMobile").offset().top
+    }, 2000);
+    $("#floatingDesktopISI #isiCopy").fadeOut();
+});
+////////
+
+$(window).scroll(function () {
+    var scrollTop = $(window).scrollTop();
+    var height = $(window).height();
+});
+//toggle isi info
+function toggleISI(btn) {
+    $(".isi-main-copy-mobile").toggle();
+    $(".isi-main-copy").toggle();
+    if ($("#isiCopy").attr('style')) {
+        $("#isiCopy").height("");
+        $(".isi-main-copy").height("");
+    }
+    else {
+        $("#isiCopy").height(window.innerHeight - 40);
+        $(".isi-main-copy").height(window.innerHeight - 85);
+    }
+    $(btn).toggleClass("glyphicon-plus");
+    $(btn).toggleClass("glyphicon-minus");
+}
+$(".glyphicon-minus").click(function () {
+    $("#isiCopy").removeAttr("style");
+});
+
+//font-selector Cookie
+
+//function createCookie(name, value, days) {
+function createCookie(name, value) {
+    //if (days) {
+    //    var date = new Date();
+    //    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    //    var expires = "; expires=" + date.toGMTString();
+    //}
+    //else
+    var expires = "";
+    document.cookie = name + "=" + value + "; " + expires + "; path=/";
+    //document.cookie = name + "=" + value + ";";
+}
+
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function eraseCookie(name) {
+    createCookie(name, "", -1);
+}
+
+//font selector
+function setFont(fnt) {
+    var fontSize;
+    $(".font-selector span").each(function () {
+        $(this).removeClass("selected");
+    });
+    $(fnt).addClass("selected");
+    if (fnt.hasClass("font-med")) {
+        $("body .text-component, body .text-component p, body .text-component div, body .isi-main-copy, body .isi-main-copy p, body .isi-main-copy div").css({ "font-size": "18px" });
+        fontSize = "18px";
+    }
+    else if (fnt.hasClass("font-lg")) {
+        $("body .text-component, body .text-component p, body .text-component div, body .isi-main-copy, body .isi-main-copy p, body .isi-main-copy div").css({ "font-size": "21px" });
+        fontSize = "21px";
+    }
+    else {
+        $("body .text-component, body .text-component p, body .text-component div, body .isi-main-copy, body .isi-main-copy p, body .isi-main-copy div").css({ "font-size": "14px" });
+        fontSize = "14px";
+    }
+
+    createCookie('font_size', fontSize);
+    createCookie('ISI_font_size', fontSize);
+    //createCookie('font_size', $("body .text-component").css("font-size"));
+    //createCookie('ISI_font_size', $("body #isiFullCopy").css("font-size"));
+
+}
+
+//ImageTextBox
+function populateAnchorTag(IsNewWindowOpen, NavigationURL, IsImageClickable, IsComponentClickable, IsHeadingClickable, IsButtonTextClickable) {
+
+    // Targetwindow specification
+    var targetWindow = !!JSON.parse(IsNewWindowOpen.toLowerCase()) ? "_blank" : "_self";
+
+    //logic to make clickable on section based on sitecore configuration.
+    if (!!JSON.parse(IsImageClickable.toLowerCase())) {
+        jQuery('div.imgDiv').wrap('<a href="' + NavigationURL + '" target="' + targetWindow + '" title="Sanofi" ></a>');
+    }
+    if (!!JSON.parse(IsComponentClickable.toLowerCase())) {
+        jQuery('div.textimagebox').wrap('<a href="' + NavigationURL + '" target="' + targetWindow + '" title="Sanofi" ></a>');
+    }
+    if (!!JSON.parse(IsHeadingClickable.toLowerCase())) {
+        jQuery('div.textHeading').wrap('<a href="' + NavigationURL + '" target="' + targetWindow + '" title="Sanofi" ></a>');
+    }
+    if (!!JSON.parse(IsButtonTextClickable.toLowerCase())) {
+        jQuery('div.buttonText').wrap('<a href="' + NavigationURL + '" target="' + targetWindow + '" title="Sanofi" ></a>');
+    }
+}
+
+//Interstitial - to get Brand name
+function SetBrandName(currentBrandName) {
+    if (currentBrandName != "" && currentBrandName != undefined)
+        hostName = currentBrandName + ".com";
+}
+
+//Search Box remove placeholder on focus
+function SearchFocus($this) {
+    $this.removeAttr("placeholder");
+    if ($this.val() != "") {
+        $this.val("");
+    }
+}
+//Search Box blur reset
+function SearchBlur($this) {
+    $this.attr("placeholder", "Search");
+    if (Modernizr.input.placeholder) {
+        // your placeholder text should already be visible!
+    } else {
+        if ($this.val() == "" || $this.val() == "Search") {
+            $this.val("Search");
+        }
+    }
+}
+//Set Search text
+function SetSearchText() {
+    $("#EMSCoveoDesktopSearchBox .CoveoQueryBox, #EMSCoveoMobileSearchBox .CoveoQueryBox, #EMSCoveo404Search .CoveoQueryBox").blur();
+    if (Modernizr.input.placeholder) {
+        // your placeholder text should already be visible!
+    } else {
+        $("#EMSCoveoDesktopSearchBox .CoveoQueryBox, #EMSCoveo404Search .CoveoQueryBox").val("Search");
+    }
+}
+
+
+/*------------------- PRINTER FRIENDLY SCRIPTS ----------------------*/
+//Printer Friendly Data
+var pfHeaderImgUrl = '';
+var pfHeaderTagline = '';
+var pfdisableClickToDel = 1;
+var pfHideImages = 0;
+var pfImageDisplayStyle = 'none';
+var pfDisablePDF = 0;
+var pfDisableEmail = 1;
+var pfDisablePrint = 1;
+var pfCustomCSS = 'http://' + hostName + '/Areas/GlobalComponents/css/Brands/' + hostName + '/print.css';
+var pfBtVersion = '1';
+
+function printFriendly(printEnabled) {
+    //remove print friendly files if they exist
+    //$("script[src='https://pf-cdn.printfriendly.com/ssl/main.js']").remove();
+    $("script[src='http://cdn.printfriendly.com/printfriendly.js']").remove();
+
+
+
+    //var js, pf; pf = document.createElement('script');
+    //pf.type = 'text/javascript';
+    //if ('https:' == document.location.protocol) {
+    //    js = 'https://pf-cdn.printfriendly.com/ssl/main.js'
+    //}
+    //else {
+    //    js = 'http://cdn.printfriendly.com/printfriendly.js'
+    //}
+    //pf.src = js;
+    //document.getElementsByTagName('head')[0].appendChild(pf);
+
+    if (printEnabled == 'noPrint') {
+        pfDisablePrint = 1;
+    }
+    else {
+        pfDisablePrint = 0;
+    }
+
+
+    $.getScript("http://cdn.printfriendly.com/printfriendly.js", function () {
+        window.print();
+    });
+
+}
+
+
+$(document).ready(function () {
+
+    processCoachUrls();
+
+    //For print the webpage
+    $('.print-btn').click(function () {
+        (window).print();
+    });
+
+    //get url for Printer Friendly text
+    setPrinterText();
+
+
+    //set search text onload
+    SetSearchText();
+    //search text function
+    $("#EMSCoveoDesktopSearchBox .CoveoQueryBox, #EMSCoveoMobileSearchBox .CoveoQueryBox, #EMSCoveo404Search .CoveoQueryBox").focus(function () {
+        var $this = $(this);
+        SearchFocus($this);
+    });
+    $("#EMSCoveoDesktopSearchBox .CoveoQueryBox, #EMSCoveoMobileSearchBox .CoveoQueryBox, #EMSCoveo404Search .CoveoQueryBox").blur(function () {
+        var $this = $(this);
+        SearchBlur($this);
+    });
+
+    //Passing Brand name to the SetBrandName function
+    if ($('#brandName') != undefined) {
+        SetBrandName($('#brandName').val());
+    }
+    //console.log("1");
+    //global nav hover 
+    $(".nav-tabs .dropdown-menu").hover(function () {
+        //console.log("1");
+        $(this).prev().toggleClass("active-submenu");
+    }, function () {
+        $(this).prev().toggleClass("active-submenu");
+    });
+
+    //toggle ISI info in mobile view
+    $(".isi-button .glyphicon").click(function () {
+        toggleISI($(this));
+    });
+
+    //font selector
+    $(".font-selector span").click(function () {
+        setFont($(this));
+    });
+
+
+    if (readCookie('font_size') == '14px') {
+        $("body .text-component, body .text-component p, body .text-component div, body .isi-main-copy, body .isi-main-copy p, body .isi-main-copy div").css({ "font-size": "14px" });
+        $(".font-selector span").each(function () {
+            $(this).removeClass("selected");
+        });
+        $(".font-selector span:eq(0)").addClass("selected");
+    }
+    else if (readCookie('font_size') == '18px') {
+        $("body .text-component, body .text-component p, body .text-component div, body .isi-main-copy, body .isi-main-copy p, body .isi-main-copy div").css({ "font-size": "18px" });
+        $(".font-selector span").each(function () {
+            $(this).removeClass("selected");
+        });
+        $(".font-selector span:eq(1)").addClass("selected");
+    }
+    else if (readCookie('font_size') == '21px') {
+        $("body .text-component, body .text-component p, body .text-component div, body .isi-main-copy, body .isi-main-copy p, body .isi-main-copy div").css({ "font-size": "21px" });
+        $(".font-selector span").each(function () {
+            $(this).removeClass("selected");
+        });
+        $(".font-selector span:eq(2)").addClass("selected");
+    }
+
+
+
+    //Social share icon show/hide
+    $('.share-btn').click(function () {
+        if ($(this).hasClass("selected")) {
+            $('.share-show-hide').hide();
+            $(this).removeClass('selected');
+        } else {
+            $('.share-show-hide').show();
+            $(this).addClass('selected');
+        }
+        return false;
+    });
+    $('.share-show-hide li').click(function () {
+        $('.share-show-hide').hide();
+        $('.share-btn').removeClass('selected');
+    });
+
+
+    //Social share 
+    $(".share-show-hide .social-pop-up").click(function () {
+        //get param values from button
+        var productName = $(this).attr("product-name");
+        var brandName = $(this).attr("brand-name");
+        var websiteName = $(this).attr("website-name");
+        var urlPath = $(this).attr("url-path");
+        //insert values into modal
+        $("#myModal .product-name").text(productName);
+        $("#myModal .brand-name").text(brandName);
+        $("#myModal .website-name").text(websiteName);
+        $("#myModal .goToSite").attr("website-path", urlPath);
+    });
+    $(".goToSite").click(function () {
+        var url = $(this).attr("website-path");
+        window.open(url);
+    });
+
+
+
+    ///////////////////////////Interstitials///////////////////////////
+    ////////////////////////////To get hidden links for which Interstitial has to be displayed//////////////////////////////////
+
+
+    if ($('#hdnHCPLinks').length) {
+
+        lstHCPLinks = $("#hdnHCPLinks").val().replace(/http:\/\//g, '').replace(/https:\/\//g, '').replace(/www./g, '').replace(/\\/g, '/');
+        //Declare Empty Array
+        var arrayHCPLinks = [];
+        if (lstHCPLinks.length > 0) {
+            arrayHCPLinks = lstHCPLinks.split(',');
+            for (i = 0; i < arrayHCPLinks.length; i++) {
+
+                if (arrayHCPLinks[i].slice(-1) == '/')
+                    arrayHCPLinks[i] = arrayHCPLinks[i].slice(0, -1);
+                arrayHCPLinks[i] = arrayHCPLinks[i].toLowerCase();
+            }
+        }
+
+
+    }
+    if ($('#hdnExternalLinks').length) {
+
+        lstExternalLinks = $("#hdnExternalLinks").val().replace(/http:\/\//g, '').replace(/https:\/\//g, '').replace(/www./g, '');
+        //Declare Empty Array
+        var arrayExternalLinks = [];
+        if (lstExternalLinks.length > 0) {
+            arrayExternalLinks = lstExternalLinks.split(',');
+
+            for (i = 0; i < arrayExternalLinks.length; i++) {
+                arrayExternalLinks[i] = $.trim(arrayExternalLinks[i]);
+                if (arrayExternalLinks[i].slice(-1) == '/')
+                    arrayExternalLinks[i] = arrayExternalLinks[i].slice(0, -1);
+                arrayExternalLinks[i] = arrayExternalLinks[i].toLowerCase();
+            }
+        }
+
+    }
+    if ($('#hdnRegionLinks').length) {
+
+        lstRegionLinks = $("#hdnRegionLinks").val().replace(/http:\/\//g, '').replace(/https:\/\//g, '').replace(/www./g, '').replace(/\\/g, '/');
+        //Declare Empty Array
+        var arrayRegionLinks = [];
+        if (lstRegionLinks.length > 0) {
+            arrayRegionLinks = lstRegionLinks.split(',');
+
+            for (i = 0; i < arrayRegionLinks.length; i++) {
+                if (arrayRegionLinks[i].slice(-1) == '/')
+                    arrayRegionLinks[i] = arrayRegionLinks[i].slice(0, -1);
+                arrayRegionLinks[i] = arrayRegionLinks[i].toLowerCase();
+            }
+        }
+
+    }
+    if ($('#hdnUnbrandedLinks').length) {
+
+        lstUnbrandedLinks = $("#hdnUnbrandedLinks").val().replace(/http:\/\//g, '').replace(/https:\/\//g, '').replace(/www./g, '').replace(/\\/g, '/');
+        //Declare Empty Array
+        var arrayUnbrandedLinks = [];
+        if (lstUnbrandedLinks.length > 0) {
+            arrayUnbrandedLinks = lstUnbrandedLinks.split(',');
+
+            for (i = 0; i < arrayUnbrandedLinks.length; i++) {
+                if (arrayUnbrandedLinks[i].slice(-1) == '/')
+                    arrayUnbrandedLinks[i] = arrayUnbrandedLinks[i].slice(0, -1);
+                arrayUnbrandedLinks[i] = arrayUnbrandedLinks[i].toLowerCase();
+            }
+        }
+    }
+
+    //////////////////////////////////////////////////////////////
+
+    //////////////////////Accordion Panel Hide First Panel when the page load ///////////////////////
+
+    if ($(".panel-group")) {
+        $(".panel-group div:first-child div.panel-heading h4 a").trigger("click");
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /// Add attributes to anchor tags to show popups///     
+    $('a').each(function () {
+        if (arrayHCPLinks != undefined) {
+
+            if (typeof ($(this).attr('href')) != 'undefined') {
+
+                if ($(this).attr('href').indexOf('http') == 0 || $(this).attr('href').indexOf('www') == 0) {
+
+                    var anHREF = $.trim(($(this).attr('href')));
+                    anHREF = $.trim($(this).attr('href').replace(/http:\/\//g, '').replace(/https:\/\//g, '')).replace(/www./g, '').replace(/\\/g, '/');
+
+                    if (anHREF.slice(-1) == '/')
+                        anHREF = anHREF.slice(0, -1);
+                    anHREF = anHREF.toLowerCase();
+
+                    var flag = false;
+                    if (hostName == "")
+                        hostName = location.hostname;
+
+
+                    if (anHREF.length > 1) {
+                        var arrayExternalDomains = [];
+                        arrayExternalDomains = anHREF.split('/');
+
+                        for (i = 0; i < arrayHCPLinks.length; i++) {
+                            if (anHREF.toLowerCase() === arrayHCPLinks[i].toLowerCase()) {
+                                flag = true;
+                                $(this).addClass('lnkHCP');
+                                $(this).attr("brand-name", hostName);
+                                $(this).attr("website-name", arrayExternalDomains[0]);
+                                $(this).attr("data-toggle", "modal");
+                                $(this).attr("data-target", "#hcpMod");
+                                break;
+                            }
+                        }
+
+                        if (!flag) {
+
+                            for (i = 0; i < arrayExternalLinks.length; i++) {
+                                if (arrayExternalDomains[0].toLowerCase() === arrayExternalLinks[i].toLowerCase()) {
+                                    flag = true;
+                                    $(this).addClass('lnkExternal');
+                                    $(this).attr("brand-name", hostName);
+                                    $(this).attr("website-name", arrayExternalDomains[0]);
+                                    $(this).attr("data-toggle", "modal");
+                                    $(this).attr("data-target", "#thirdPartyMod");
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!flag) {
+                            for (i = 0; i < arrayRegionLinks.length; i++) {
+                                if (anHREF.toLowerCase() === arrayRegionLinks[i].toLowerCase()) {
+                                    flag = true;
+                                    $(this).addClass('lnkRegion');
+                                    $(this).attr("brand-name", hostName);
+                                    $(this).attr("website-name", arrayExternalDomains[0]);
+                                    $(this).attr("data-toggle", "modal");
+                                    $(this).attr("data-target", "#regionMod");
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!flag) {
+                            for (i = 0; i < arrayUnbrandedLinks.length; i++) {
+                                if (anHREF.toLowerCase() === arrayUnbrandedLinks[i].toLowerCase()) {
+                                    flag = true;
+                                    $(this).addClass('lnkUnbranded');
+                                    $(this).attr("brand-name", hostName);
+                                    $(this).attr("website-name", arrayExternalDomains[0]);
+                                    $(this).attr("data-toggle", "modal");
+                                    $(this).attr("data-target", "#unbrandedMod");
+                                    break;
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+    });
+
+
+    /// Add attributes to anchor tags///
+
+    //intersitial(overlay) pop-up - 3rd party link
+    $('.lnkHCP,.lnkExternal,.lnkRegion, .lnkUnbranded').each(function () {
+
+        $(this).on('click', function (e) {
+            e.preventDefault();
+            //get param values from button          
+            var brandName = $(this).attr("brand-name");
+            var urlPath = $(this).attr("href");
+
+            if ($(this).attr("data-targethost") != undefined)
+                var websiteName = $(this).attr("data-targethost");
+            else
+                var websiteName = $(this).attr("website-name");
+
+
+            if ($(this).attr("class").indexOf('lnkHCP') > -1) {
+                $("#hcpMod .brand-name").text(brandName);
+                $("#hcpMod .website-name").text(websiteName);
+                $("#hcpMod .websiteBtn").attr("website-path", urlPath);
+            }
+            else if ($(this).attr("class").indexOf('lnkExternal') > -1) {
+                $("#thirdPartyMod .brand-name").text(brandName);
+                $("#thirdPartyMod .website-name").text(websiteName);
+                $("#thirdPartyMod .websiteBtn").attr("website-path", urlPath);
+            }
+            else if ($(this).attr("class").indexOf('lnkRegion') > -1) {
+                $("#regionMod .brand-name").text(brandName);
+                $("#regionMod .website-name").text(websiteName);
+                $("#regionMod .websiteBtn").attr("website-path", urlPath);
+            }
+            else if ($(this).attr("class").indexOf('lnkUnbranded') > -1) {
+                $("#unbrandedMod .brand-name").text(brandName);
+                $("#unbrandedMod .website-name").text(websiteName);
+                $("#unbrandedMod .websiteBtn").attr("website-path", urlPath);
+            }
+        });
+    });
+
+
+    //pop-up navigate to 3rd party website
+    $('.websiteBtn').each(function () {
+        $(this).on('click', function (e) {
+            var url = $(this).attr("website-path");
+            $(this).attr("data-dismiss", "modal");
+            window.open(url);
+
+
+        });
+    });
+
+    $.ajaxPrefilter(function (options) {
+        var token = $('#RequestTokenID').val();
+        if (!options.beforeSend) {
+            options.beforeSend = function (xhr) {
+                xhr.setRequestHeader('RequestVerificationToken', token);
+            }
+        }
+    });
+
+    // Enabling Print Canvas based on flag set
+
+    if ($('#enablePrintCanvas')[0] != null && $('#enablePrintCanvas')[0] != undefined) {
+
+
+        $(".print-btn").unbind('click');
+
+        $('.print-btn').click(function () {
+            $.getScript('/Areas/GlobalComponents/js/Global/vendor/html2canvas.min.js', function () {
+                html2canvas($('body'), {
+                    onrendered: function (canvas) {
+                        var img = canvas.toDataURL("image/png")
+                        var wd = window.open(img, "_self");
+                        wd.document.write('<img src="' + img + '"/>');
+                        wd.print();
+                        wd.location.reload();
+                    }
+                });
+
+            });
+        });
+
+    }
+
+
+    // End of Print Canvas 
+});
+
+
+
+
+function processCoachUrls() {
+
+    var cookieName = location.hostname + ".utmz";
+
+
+    if (readCookie(cookieName) != null) {
+        $('a[href*="coach.toujeo.com"]').each(function () {
+            var newLink = $(this).attr('href');
+            newLink += (newLink.match(/\?/) ? '&' : '?') + readCookie(cookieName);
+            $(this).attr('href', newLink);
+        });
+    }
+    else {
+
+        var fullCookieValue = "";
+        var utmcampaign = getParameterByName("utm_campaign");
+        var medium = getParameterByName("utm_medium");
+        var content = getParameterByName("utm_content");
+        var source = getParameterByName("utm_source");
+        var term = getParameterByName("utm_term");
+        var moc = getParameterByName("moc");
+        if ($.trim(utmcampaign) != '')
+            fullCookieValue += "utm_campaign=" + utmcampaign + "&";
+        if ($.trim(medium) != '')
+            fullCookieValue += "utm_medium=" + medium + "&";
+        if ($.trim(content) != '')
+            fullCookieValue += "utm_content=" + content + "&";
+        if ($.trim(source) != '')
+            fullCookieValue += "utm_source=" + source + "&";
+        if ($.trim(term) != '') {
+            fullCookieValue += "utm_term=" + term + "&";
+            /* Add moc value to cookie if it exists in query string */
+            if ($.trim(moc) != '')
+                fullCookieValue += "moc=" + moc + "&";
+            else {
+                if ($.trim(term).split("_").length > 1)
+                    fullCookieValue += "moc=" + $.trim(term).split("_")[1] + "&";
+            }
+        }
+
+
+        if ($.trim(fullCookieValue) != '') {
+            createCookie(cookieName, fullCookieValue.substring(0, fullCookieValue.length - 1));
+
+            $('a[href*="coach.toujeo.com"]').each(function () {
+                var newLink = $(this).attr('href');
+                newLink += (newLink.match(/\?/) ? '&' : '?') + readCookie(cookieName);
+                $(this).attr('href', newLink);
+            });
+        }
+    }
+}
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+///////////////////////////////////
+//END document.ready
+
+// Remediate Coveo Search  START
+function LoadDTSearchResults() {
+    $('.CoveoSearchBox').addClass('coveo-executing-query');
+    if ($('#brandSearchDT #searchtextbox').val().length > 0) {
+        window.location.href = window.location.protocol + "//" + window.location.hostname + $('#hdnSearchPageUrl').val() + '#q=' + $('#brandSearchDT #searchtextbox').val();
+    }
+    else {
+        window.location.href = window.location.protocol + "//" + window.location.hostname + $('#hdnSearchPageUrl').val() + '#';
+    }
+    $('.CoveoSearchBox').removeClass('coveo-executing-query');
+}
+
+function LoadMBSearchResults() {
+    $('.CoveoSearchBox').addClass('coveo-executing-query');
+    if ($('#brandSearchMB #searchtextbox').val().length > 0) {
+        window.location.href = window.location.protocol + "//" + window.location.hostname + $('#hdnSearchPageUrl').val() + '#q=' + $('#brandSearchMB #searchtextbox').val();
+    }
+    else {
+        window.location.href = window.location.protocol + "//" + window.location.hostname + $('#hdnSearchPageUrl').val() + '#';
+    }
+    $('.CoveoSearchBox').removeClass('coveo-executing-query');
+}
+
+$('#brandSearchDT #searchbutton').click(function () {
+    LoadDTSearchResults();
+});
+
+$('#brandSearchMB #searchbutton').click(function () {
+    LoadMBSearchResults();
+});
+
+
+$('#brandSearchDT #searchtextbox').keypress(function (event) {
+    if (event.keyCode == 13) {
+        LoadDTSearchResults();
+    }
+});
+
+$('#brandSearchMB #searchtextbox').keypress(function (event) {
+    if (event.keyCode == 13) {
+        LoadMBSearchResults();
+    }
+});
+
+$("#brandSearchDT #searchtextbox").keyup(function () {
+    if ($('#brandSearchDT #searchtextbox').val().length > 0) {
+
+        $('.coveo-query-box-clear').css('display', 'block')
+    }
+    else {
+        $('.coveo-query-box-clear').css('display', 'none')
+    }
+});
+
+$("#brandSearchMB #searchtextbox").keyup(function () {
+    if ($('#brandSearchMB #searchtextbox').val().length > 0) {
+
+        $('.coveo-query-box-clear').css('display', 'block')
+    }
+    else {
+        $('.coveo-query-box-clear').css('display', 'none')
+    }
+});
+
+$('.coveo-query-box-clear').click(function () {
+    $('#brandSearchDT #searchtextbox').val("")
+    $('#brandSearchMB #searchtextbox').val("")
+    $('.coveo-query-box-clear').css('display', 'none')
+});
+//Remediate Coveo Search END
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: 31c7dbff-3282-48f8-91d4-99c83964a2f9
+   -------------------*/
+
+var requiredfieldError, pNameAlphaRegex, yNameAlphaRegex, alphaError, yEmailRegex, pEmailRegex, emailError, eMailRegx, alphaRegex, minLenError, maxLenError;
+
+eMailRegx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+alphaRegex = /^[^!@$%^&*()_+|~=`\\#{}\[\]:";<>?,.\/^\d]*$/;
+
+var emv = $(".email-content");
+
+requiredfieldError = Boolean(emv.data("requirederror")) ? emv.data("requirederror") : "This field is required.";
+alphaError = Boolean(emv.data("alphaerror")) ? emv.data("alphaerror") : "Please enter letters only";
+emailError = Boolean(emv.data("emailerror")) ? emv.data("emailerror") : "Please provide a valid email address.";
+minLenError = Boolean(emv.data("minlenerror")) ? emv.data("minlenerror") : "Please enter at least 3 characters.";
+maxLenError = Boolean(emv.data("maxlenerror")) ? emv.data("maxlenerror") : "Please enter no more than 80 characters.";
+
+//Check IsChecked 
+pNameAlphaRegex = Boolean(emv.data("isrecipientalpha")) ?
+   (IsChecked(emv.data("isrecipientalpha")) ? emv.data("ralpharegex") : alphaRegex) : alphaRegex;
+
+pEmailRegex = Boolean(emv.data("isrecipientemailval")) ?
+   (IsChecked(emv.data("isrecipientemailval")) ? emv.data("remailregex") : eMailRegx) : eMailRegx;
+
+yNameAlphaRegex = Boolean(emv.data("issenderalpha")) ?
+       (IsChecked(emv.data("issenderalpha")) ? emv.data("salpharegex") : alphaRegex) : alphaRegex;
+
+yEmailRegex = Boolean(emv.data("issenderemailval")) ?
+  (IsChecked(emv.data("issenderemailval")) ? emv.data("semailregex") : eMailRegx) : eMailRegx;
+
+//for email pop up overlay form
+var emailThisPageValidator = $('#emailModal').validate({
+    onkeyup: false,
+    onclick: false,
+    rules: {
+        pName: {
+            minlength: 3,
+            maxlength: 80,
+            required: true,
+            onlyalphabetspName: true
+        },
+        pEmail: {
+            RecipientEmailValidate: true,
+            required: true
+        },
+        yName: {
+            minlength: 3,
+            maxlength: 80,
+            required: true,
+            onlyalphabetsyName: true
+        },
+        yEmail: {
+            SenderEmailValidate: true,
+            required: true
+        }
+    },
+    highlight: function (element) {
+        $(element).closest('.form-group').addClass('has-error');
+    },
+    unhighlight: function (element) {
+        $(element).closest('.form-group').removeClass('has-error');
+    },
+    errorElement: 'span',
+    errorClass: 'help-block',
+    messages: {
+        pEmail:
+            {
+                required: emailError,
+                RecipientEmailValidate: emailError
+            },
+        yEmail:
+            {
+                required: emailError,
+                SenderEmailValidate: emailError
+            },
+        pName: {
+            required: requiredfieldError,
+            onlyalphabetspName: alphaError,
+            minlength: minLenError,
+            maxlength: maxLenError
+        },
+        yName: {
+            required: requiredfieldError,
+            onlyalphabetsyName: alphaError,
+            minlength: minLenError,
+            maxlength: maxLenError
+        }
+
+    }
+});
+
+jQuery.validator.addMethod('onlyalphabetspName', function (value) {
+    return ValidateByRegex($("#pName").val(), pNameAlphaRegex);
+});
+
+jQuery.validator.addMethod('onlyalphabetsyName', function (value) {
+    return ValidateByRegex($("#yName").val(), yNameAlphaRegex);
+});
+
+jQuery.validator.addMethod('SenderEmailValidate', function (value) {
+    return ValidateByRegex($("#yEmail").val(), yEmailRegex);
+});
+
+jQuery.validator.addMethod('RecipientEmailValidate', function (value) {
+    return ValidateByRegex($("#pEmail").val(), pEmailRegex);
+});
+
+function ValidateByRegex(txtValue, regex) {
+    debugger;
+    var tValue = txtValue;
+    var regx = new RegExp(regex);
+    if (tValue.trim() != tValue)
+        return false;
+    else {
+        if (!regx.test(tValue)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
+function IsChecked(ischeckedVal) {
+    return ischeckedVal.toLowerCase() == 'true' ? true : false;
+}
+
+/* -------------------
+BEGIN $name 
+Sitecore Resource: 582d348b-1b49-4146-ba10-3827543d0be6
+   -------------------*/
+/*
+function sendEmailClick(isiguid,subject) {
+    // alert("Handler for click called.");
+    var form = $("#emailModal");
+    form.validate();
+    if (form.valid()) {
+        sendEmail(isiguid,subject);
+    }
+}
+
+$(document).ready(function () {
+
+
+
+    $("#btnSendAnother").click(function (event) {
+        $(".email-container").show();
+        $(".email-success-container").hide();
+    });
+
+
+    $("#btnDone").click(function (event) {
+        $("#myModalEmail").modal('hide');
+        $(".email-container").show();
+        $(".email-success-container").hide();
+    });
+
+
+});
+
+function sendEmail(isiguid,subject) {
+
+    var formData = {
+        RecipientName: $("#pName").val(),
+        RecipientEmail: $("#pEmail").val(),
+        Subject: subject,
+        SenderName: $("#yName").val(),
+        SenderEmail: $("#yEmail").val(),
+        SendACopy: $('#cbSendCopy').is(':checked'),
+        SharedUrl: document.URL,
+        IsiGuid: isiguid
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "/api/form/ShareByEmail/",
+        data: JSON.stringify(formData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        asyn: false,
+        success: function (msg) {
+
+            if (msg === true) {
+                $("#recipientName").text($("#pName").val());
+                $("#recipientEmail").text($("#pEmail").val());
+
+                $(".email-container").hide();
+                $(".email-success-container").show();
+
+                //reset form
+                $('#emailModal').find("input[type=text], textarea").val("");
+                $('.myCheckbox').prop('checked', false);
+            } else {
+                alert("Error sending email.");
+            }
+            //end reset form
+
+            return false;
+
+        },
+        error: function (msg) {
+            alert("Error sending email:"+msg);
+            return false;
+        }
+    });
+}
+ */
+
+
+
+function sendEmailClick(emailtemplate) {
+
+    var form = $("#emailModal");
+
+    form.validate();
+    if (form.valid()) {
+        sendEmail(emailtemplate);
+    }
+}
+
+$(document).ready(function () {
+
+    $(".subContent").text($(".subContent").text().replace("{Sender}", ""));
+
+    $('#myModalEmail').on('hidden.bs.modal', function () {
+        $(".email-container").show();
+        $(".email-success-container").hide();
+        //reset form
+        $('#emailModal').find("input[type=text], textarea").val("");
+        $('#cbSendCopy').prop('checked', false);
+
+        //Which is not present in our project.
+        emailThisPageValidator.resetForm();
+
+        //Removing the error elements from the from-group
+        //$('#emailModal .has-error .help-block').remove();
+        //$('.form-group').removeClass('has-error has-feedback');
+       // $('.form-group').find('small.help-block').hide();
+       // $('.form-group').find('i.form-control-feedback').hide();     
+       
+
+    });
+
+    $("#btnSendAnother").click(function (event) {
+        $(".email-container").show();
+        $(".email-success-container").hide();
+    });
+
+
+    $("#btnDone").click(function (event) {
+        $("#myModalEmail").modal('hide');
+        $(".email-container").show();
+        $(".email-success-container").hide();
+    });
+
+
+});
+
+function sendEmail(emailtemplate) {
+
+
+
+    var formData = {
+        RecipientName: $("#pName").val(),
+        RecipientEmail: $("#pEmail").val(),
+        SenderName: $("#yName").val(),
+        SenderEmail: $("#yEmail").val(),
+        SendACopy: $('#cbSendCopy').is(':checked'),
+        SharedUrl: document.URL,
+        EmailComponentGuid: emailtemplate
+    };
+    document.getElementById('btnSend').disabled = true;
+    $.ajax({
+        type: "POST",
+        url: "/api/form/ShareByEmail/",
+        data: JSON.stringify(formData),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        asyn: false,
+        success: function (msg) {
+
+            if (msg === "true") {
+                $("#recipientName").text($("#pName").val());
+                $("#recipientEmail").text($("#pEmail").val());
+
+                $(".email-container").hide();
+                $(".email-success-container").show();
+
+                //reset form
+                $('#emailModal').find("input[type=text], textarea").val("");
+                $('#cbSendCopy').prop('checked', false);
+                document.getElementById('btnSend').disabled = false;
+            } else {
+                alert("Error sending email:" + msg);
+            }
+            //end reset form
+
+            return false;
+
+        },
+        error: function (msg) {
+            alert("Error sending email:" + msg);
+            return false;
+        }
+    });
+}
+
+/* -------------------
+BEGIN jquery_unveil 
+Sitecore Resource: bb400e24-7064-42b1-9312-f6e312f7f03a
+   -------------------*/
+/**
+ * jQuery Unveil
+ * A very lightweight jQuery plugin to lazy load images
+ * http://luis-almeida.github.com/unveil
+ *
+ * Licensed under the MIT license.
+ * Copyright 2013 Luís Almeida
+ * https://github.com/luis-almeida
+ */
+
+;(function($) {
+
+  $.fn.unveil = function(threshold, callback) {
+
+    var $w = $(window),
+        th = threshold || 0,
+        retina = window.devicePixelRatio > 1,
+        attrib = retina? "data-src-retina" : "data-src",
+        images = this,
+        loaded;
+
+    this.one("unveil", function() {
+      var source = this.getAttribute(attrib);
+      source = source || this.getAttribute("data-src");
+      if (source) {
+        this.setAttribute("src", source);
+        if (typeof callback === "function") callback.call(this);
+      }
+    });
+
+    function unveil() {
+      var inview = images.filter(function() {
+        var $e = $(this);
+        if ($e.is(":hidden")) return;
+
+        var wt = $w.scrollTop(),
+            wb = wt + $w.height(),
+            et = $e.offset().top,
+            eb = et + $e.height();
+
+        return eb >= wt - th && et <= wb + th;
+      });
+
+      loaded = inview.trigger("unveil");
+      images = images.not(loaded);
+    }
+
+    $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
+
+    unveil();
+
+    return this;
+
+  };
+
+})(window.jQuery || window.Zepto);
+
+
+/* -------------------
+BEGIN mainCT 
+Sitecore Resource: a2e69033-c026-4ec4-90a5-949d248fd34f
+   -------------------*/
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip({html: true, container: 'body', trigger: ($('body').hasClass('touch'))? 'manual':'hover'});
+    
+    $('.touch [data-toggle="tooltip"]').on('click', function() { 
+        $(this).tooltip('toggle');
+    });
+    
+    
+    $('.navbar-toggle').addClass("collapsed");
+
+    //FIX FONT SIZING
+    $("body .text-component, body .text-component p, body .text-component div, body .isi-main-copy, body .isi-main-copy p, body .isi-main-copy div").css({ "font-size": "" });
+    
+    $('#fontResizer span').on('click', function(){
+        $('#fontResizer span').removeClass('selected');
+        
+        switch($(this).attr('class')){
+            case 'font-reg':
+            $('body').css('font-size', '');
+            createCookie('font_size', '');
+            break;
+            case 'font-med':
+            $('body').css('font-size', '23px'); 
+            createCookie('font_size', $('body').css('font-size'));
+            break;
+            case 'font-lg':
+            $('body').css('font-size', '24px');
+            createCookie('font_size', $('body').css('font-size'));
+            break;
+        }
+        
+        $(this).addClass('selected');
+    });
+    
+    $('.carousel-indicators li').first().addClass('active');
+    
+    $('.score-accordion-panel').on('show.bs.collapse', function (e) {
+        //console.log( $('[data-toggle="collapse"]').not('[href="#' + $(e.target).attr('id') + '"]').not('.collapsed') );
+        //$('.score-accordion-panel').collapse();
+        $('[data-toggle="collapse"]').not('[href="#' + $(e.target).attr('id') + '"]').not('.collapsed').trigger('click');
+    });
+    
+    //$('.score-accordion-panel a').addClass('collapsed').collapse({
+    //    toggle: true,
+    //    parent: 'body'
+    //});
+    
+    //$('.score-accordion-panel .panel-collapse').data('bs.collapse').$parent = $('body');
+});
+
+
+function setFont (){
+    
+}
