@@ -83,7 +83,7 @@
         }
       }
       
-      function loadChatWidget (orgId, botId, variables) {
+      function loadChatWidget ( botId, orgId, variables) {
         var variableList = []
         for (var name in variables) {
           if (typeof variables[name] === 'object') {
@@ -93,7 +93,7 @@
           }
         }
         addChatWidget(
-          'https://console.rul.ai/',
+          'https://alpha.rul.ai/',
           botId,
           orgId,
           {
@@ -105,7 +105,7 @@
       }
 
       $(function () {
-        loadChatWidget('9c0b2d9bf7474c69a6598eee2c14ea25', '11c9df37bb7141ebb4b4dcff801691be', {})
+        loadChatWidget('d289f9a4bcd9495ea72d55b35cb2173c', 'e06aab9d4942489a9a13b35c87b04039', {})
       })
       </script>
   </head>
