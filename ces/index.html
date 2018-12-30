@@ -39,9 +39,14 @@
           var script1 = scriptParts[0] + '</scr' + 'ipt>'
           var script2 = scriptParts[1] + '</scr' + 'ipt>'
           $('body').append(script1)
-          setTimeout(function () {
+          var delayedFunc = function () {
+            if (window._widget === undefined) {
+              setTimeout(delayedFunc, 100)
+              return
+            }
             $('body').append(script2)
-          }, 500)
+          }
+          delayedFunc()
         } else {
           $('#iframe_window').remove()
           $('#widget').remove()
